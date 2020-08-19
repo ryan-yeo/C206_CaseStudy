@@ -28,6 +28,6 @@ public class Promotion {
 		this.discountAmount = discountAmount;
 	}
 	public String toString() {
-		return null;
+		return String.format("%-20s %-20s $%.2f\n", getPromotionCode(), getEndDate(), getDiscountAmount());
 	}
 }
