@@ -6,7 +6,6 @@ public class CanteenApp {
 		// TODO Auto-generated method stub
 		
 		// Start - By Vanessa: 
-		optionMenu();
 		int option = 0;
 		ArrayList<Order> OrderList = new ArrayList<Order>();
 		ArrayList<Promotion> promotionList = new ArrayList<Promotion>();
@@ -17,6 +16,7 @@ public class CanteenApp {
 		
 		// By Vanessa:
 		while (option!=6) {
+			CanteenApp.optionMenu();
 			option = Helper.readInt("Enter option > ");
 			
 			switch (option) {
@@ -60,19 +60,18 @@ public class CanteenApp {
 					
 					break;
 					
-				case 5: // Promotion -> NICOLE5
-					Helper.line(30, "-");
-					System.out.println("Promotion MENU");
-					Helper.line(30, "-");
+				case 5: // Promotion -> NICOLE5 
+					CanteenApp.setHeader("PROMOTION MENU");
 					System.out.println("1. View Promotion");
 					System.out.println("2. Add Promotion");
 					System.out.println("3. Delete Promotion");
 					int choice = Helper.readInt("Enter choice > ");
 					if(choice == 1) {
-						
+						CanteenApp.viewAllPromotion(promotionList);
 					}
 					else if(choice == 2){
-						
+						Promotion promo = inputPromotion();
+						CanteenApp.addPromotion(promotionList, promo);
 					}
 					else if(choice == 3) {
 						
@@ -110,6 +109,14 @@ public class CanteenApp {
 // End
 /*=============================================================================================================================*/	
 	
+/*=============================================================================================================================*/
+// Header by NICOLE
+	public static void setHeader(String header) {
+		Helper.line(80, "-");
+		System.out.println(header);
+		Helper.line(80, "-");
+	}
+/*=============================================================================================================================*/
 	
 
 	
@@ -130,14 +137,34 @@ public class CanteenApp {
 
 /*=============================================================================================================================*/
 //Promotion ADD, VIEW DELETE BY NICOLE
-	public static void addPromotion(ArrayList<Promotion> promotionList) {	
-		
+	public static Promotion inputPromotion() {
+		String promoCode = Helper.readString("Enter Promotion Code: ");
+		String endingDate = Helper.readString("Enter Promotion End Date: ");
+		double disAmount = Helper.readDouble("Enter Discount Amount: ");
+
+		Promotion promo = new Promotion(promoCode, endingDate, disAmount);
+		return promo;
+
+	}
+	public static void addPromotion(ArrayList<Promotion> promotionList, Promotion promo) {	
+		promotionList.add(promo);
+		System.out.println("Promotion added");
 	}
 	public static void deletePromotion(ArrayList<Promotion> promotionList) {	
 		
 	}
-	public static void viewAllPromotion(ArrayList<Promotion> PromotionList) {	
-		
+	public static String retrieveAllPromotion(ArrayList<Promotion> promotionList) {
+		CanteenApp.setHeader("PROMOTION LIST");
+		String output = "";
+		for (int i = 0; i < promotionList.size(); i++) {
+			output += String.format("%-60s\n", promotionList.get(i).toString());
+		}
+		return output;
+	}
+	public static void viewAllPromotion(ArrayList<Promotion> promotionList) {	
+		String output = String.format("%-20s %-20s %-20s\n", "PROMOTION CODE", "END DATE", "DISCOUNT AMOUNT");
+		output += retrieveAllPromotion(promotionList);
+		System.out.println(output);
 	}
 /*=============================================================================================================================*/
 
