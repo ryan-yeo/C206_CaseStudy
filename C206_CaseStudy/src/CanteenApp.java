@@ -60,7 +60,7 @@ public class CanteenApp {
 					
 					break;
 					
-				case 5: // Promotion -> NICOLE5 
+				case 5: // Promotion -> NICOLE
 					CanteenApp.setHeader("PROMOTION MENU");
 					System.out.println("1. View Promotion");
 					System.out.println("2. Add Promotion");
@@ -74,7 +74,7 @@ public class CanteenApp {
 						CanteenApp.addPromotion(promotionList, promo);
 					}
 					else if(choice == 3) {
-						
+						CanteenApp.deletePromotion(promotionList);
 					}
 					else {
 						System.out.println("Invalid Choice Input.");
@@ -150,8 +150,32 @@ public class CanteenApp {
 		promotionList.add(promo);
 		System.out.println("Promotion added");
 	}
+	public static Boolean doDeletePromotion(ArrayList<Promotion> promotionList, String promotionCode, String endDate) {
+
+		boolean isDelete = false;
+
+		for (int i = 0; i < promotionList.size(); i++) {
+
+			String promoCode = promotionList.get(i).getPromotionCode();
+			String endingDate = promotionList.get(i).getEndDate();
+
+			if (promotionCode.equalsIgnoreCase(promoCode) && endDate.equalsIgnoreCase(endingDate)) {
+				promotionList.remove(i);
+				isDelete = true;
+			}
+		}
+		return isDelete;
+	}
 	public static void deletePromotion(ArrayList<Promotion> promotionList) {	
-		
+		CanteenApp.viewAllPromotion(promotionList);
+		String promotionCode = Helper.readString("Enter Promotion Code: ");
+		String endDate = Helper.readString("Enter End Date: ");
+		Boolean isDelete = doDeletePromotion(promotionList, promotionCode, endDate);
+		if (isDelete == false) {
+			System.out.println("Invalid Promotion Code");
+		} else {
+			System.out.println(promotionCode + " Promotion deleted");
+		}
 	}
 	public static String retrieveAllPromotion(ArrayList<Promotion> promotionList) {
 		CanteenApp.setHeader("PROMOTION LIST");
