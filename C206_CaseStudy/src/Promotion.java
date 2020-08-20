@@ -1,4 +1,5 @@
 
+// By NICOLE
 public class Promotion {
 	private String promotionCode;
 	private String endDate;

@@ -47,9 +47,18 @@ public class Order {
 		this.items = items;
 	}
 	
-	// not done
 	public String toString() {
-		return null;
+
+		String itemList = "";
+		for (int i=0; i < items.size(); i++) {
+			itemList += items.get(i).getName();
+			if (i != (items.size()-1)) {
+				itemList += ", ";
+			}
+		}
+		
+		String output = String.format("%-15s %-15s %-15b %s\n", username, status, takeaway, itemList);
+		return output;
 		
 	}
 }

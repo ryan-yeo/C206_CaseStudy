@@ -1,42 +1,50 @@
 import java.util.ArrayList;
 
 public class CanteenApp {
-
+	
+	// Start - By Vanessa:
+	private static ArrayList<Order> OrderList = new ArrayList<Order>();
+	// End
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
 		// Start - By Vanessa: 
 		int option = 0;
-		ArrayList<Order> OrderList = new ArrayList<Order>();
-		ArrayList<Promotion> promotionList = new ArrayList<Promotion>();
+		ArrayList<MenuItem> xx = new ArrayList<MenuItem>();
+		ArrayList<MenuItem> xxx = new ArrayList<MenuItem>();	
+		xx.add(new MenuItem("Western", "Chicken Chop", 5.90));
+		xx.add(new MenuItem("Western", "Fish n' Chips", 8.90));
+		xxx.add(new MenuItem("Local", "Fried Rice", 5.0));
+		OrderList.add(new Order("Vanny", "Processing", true, xx));
+		OrderList.add(new Order("Bubbling", "Processing", true, xxx));
 		// End
 		
-		
-		
+		// Start by NICOLE
+		ArrayList<Promotion> promotionList = new ArrayList<Promotion>();
+		// End
 		
 		// By Vanessa:
 		while (option!=6) {
 			CanteenApp.optionMenu();
 			option = Helper.readInt("Enter option > ");
+			System.out.println("");
 			
 			switch (option) {
 				case 1: // User Account
 					
-					
 					break;
 					
 				case 2: // Menu Item
-					
-					
+
 					break;
 					
 				case 3: // Start of Order -> By Vanessa
-					
 					String orderMenu[] = {"View Order", "Add Order", "Delete Order"};
 					String output = "";
-					Helper.line(30, "-");
+					Helper.line(80, "-");
 					System.out.println("ORDER MENU");
-					Helper.line(30, "-");
+					Helper.line(80, "-");
 					for (int i = 0; i < orderMenu.length; i++) {
 						output += String.format("%d. %s\n", (i+1), orderMenu[i]);
 					}
@@ -45,10 +53,13 @@ public class CanteenApp {
 					
 					switch (order) {
 						case 1:
+							viewAllOrder(OrderList);
 							break;
 						case 2:
+							addOrder(OrderList);
 							break;
 						case 3:
+							deleteOrder(OrderList);
 							break;
 						default:
 							System.out.println("Invalid Input!");
@@ -56,7 +67,6 @@ public class CanteenApp {
 					break;	// End of Order
 					
 				case 4: // Purchase Order
-					
 					
 					break;
 					
@@ -95,9 +105,9 @@ public class CanteenApp {
 /*=============================================================================================================================*/
 // Start -> By Vanessa:
 	public static void optionMenu() {
-		Helper.line(30, "-");
+		Helper.line(80, "-");
 		System.out.println("MENU");
-		Helper.line(30, "-");
+		Helper.line(80, "-");
 		String output = "";
 		String list[] = {"User Account", "Menu Item", "Order", "Purchase Order", "Promotions", "Exit"};
 		for (int i = 0; i < list.length; i++) {
@@ -119,22 +129,81 @@ public class CanteenApp {
 /*=============================================================================================================================*/
 	
 
-	
-	
-	
 /*=============================================================================================================================*/
 // Start -> By Vanessa:
-	public static void addOrder(ArrayList<Order> items) {	
+	public static void addOrder(ArrayList<Order> items) {
+		viewAllMenuItem(MenuList);
+		Helper.line(80, "-");
+		System.out.println("Add Order");
+		Helper.line(80, "-");
+		
+		ArrayList<MenuItem> items1 = new ArrayList<MenuItem>();
+		String username = Helper.readString("Enter your username > ");
+		String status = "Processing";
+		boolean takeaway = Helper.readBoolean("Takeaway? (True/False) > ");
+		
+		String input = "";
+		while (!input.equalsIgnoreCase("N")) {
+			String item = Helper.readString("Enter food > ");
+			boolean avail = false;
+			
+			for (MenuItem i: MenuList) {
+				if (item.equalsIgnoreCase(i.getName())) {
+					items1.add(new MenuItem(i.getCategory(), i.getName(), i.getPrice()));
+					System.out.println("Food item added!\n");
+					avail = true;
+					break;
+				}
+			}
+			if (avail == false) {
+				System.out.println("Invalid food item!");
+			}
+			input = Helper.readString("Do you want to continue add food?(Y/N)> ");
+		}
+		
+		System.out.println("Order placed.\n");
+		OrderList.add(new Order(username, status, takeaway, items1));
 	}
 	
 	public static void deleteOrder(ArrayList<Order> items) {	
+		viewAllOrder(OrderList);
+		Helper.line(80, "-");
+		System.out.println("Delete Order");
+		Helper.line(80, "-");
+		
+		boolean checker = false;
+		while (checker != true) {
+			String input = Helper.readString("Enter username to remove > ");
+			for(int i=0; i<OrderList.size(); i++) {
+				if (input.equalsIgnoreCase(OrderList.get(i).getUsername())) {
+					OrderList.remove(i);
+					System.out.println("Order deleted");
+					checker = true;
+				}
+			}
+			if (checker == false) {
+				System.out.println("Username does not exist. \n");
+			}
+		}	
 	}
 	
-	public static void viewAllOrder(ArrayList<Order> items) {	
+	public static void viewAllOrder(ArrayList<Order> items) {
+		Helper.line(80, "-");
+		System.out.println("View Orders");
+		Helper.line(80, "-");
+		
+		String output = String.format("%-15s %-15s %-15s %-20s\n", "Username", "Status", "Takeaway", "Food Item");
+		output += String.format("%-15s %-15s %-15s %-20s\n", "--------", "------", "--------", "---------");
+		for (Order i : OrderList) {
+			output += i.toString();
+		}
+		System.out.println(output);
 	}
 // End
 /*=============================================================================================================================*/
 
+	
+	
 /*=============================================================================================================================*/
 //Promotion ADD, VIEW DELETE BY NICOLE
 	public static Promotion inputPromotion() {
