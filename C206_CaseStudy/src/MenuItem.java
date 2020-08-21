@@ -3,9 +3,9 @@ public class MenuItem {
 
 	private String category;
 	private String name;
-	private float price;
+	private double price;
 	
-	public MenuItem(String category, String itemName, float price) {
+	public MenuItem(String category, String itemName, double price) {
 		this.category = category;
 		this.name = itemName;
 		this.price = price;
@@ -20,18 +20,14 @@ public class MenuItem {
 	public String getItemName() {
 		return name;
 	}
-	public void setItemName() {
+	public void setItemName(String name) {
 		this.name = name;
 	}
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice() {
+	public void setPrice(double price) {
 		this.price = price;
-	}
-
-	public void setItemName(String itemName) {
-		this.name = itemName;
 	}
 
 	public void setPrice(float price) {
