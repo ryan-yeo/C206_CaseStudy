@@ -1,10 +1,27 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CanteenAppTest {
+	private Promotion promo1;
+	private Promotion Promo2;
+	private ArrayList<Promotion> promotionList;
+	
+	@Before
+	public void setUp() throws Exception {
+		// prepare test data
+		promo1 = new Promotion("1-1 ICE MILO", "2020-8-22", 1);
+		Promo2 = new Promotion("1-1 cheese fries", "2020-8-23", 1.50);
+		promotionList = new ArrayList<Promotion>();
+	}
 	
 	@Test
 	public void addOrderTesting() {
@@ -63,5 +80,40 @@ public class CanteenAppTest {
 		
 		assertEquals("Check that ViewAllOrder", testOutput, output);
 	}
+// NICOLE Promotion TEST
+	@Test
+	public void addPromotionTest() {
+		// Item list is not null, so that can add a new item - boundary
+		assertNotNull("Check if there is valid Promotion arraylist to add to", promotionList);
+		//Given an empty list, after adding 1 item, the size of the list is 1 - normal
+		//The item just added is as same as the first item of the list
+		CanteenApp.addPromotion(promotionList, promo1);
+		assertEquals("Check that Promotion arraylist size is 1", 1, promotionList.size());
+		assertSame("Check that Camcorder is added", promo1, promotionList.get(0));
+	}
 	
+	@Test
+	public void viewPromotionTest() {
+		// Test if Item list is not null but empty - boundary
+		assertNotNull("Test if there is valid Chromebook arraylist to retrieve item from", promotionList);
+		//Given an empty list, after adding 2 items, test if the size of the list is 2 - normal
+		CanteenApp.addPromotion(promotionList, promo1);
+		CanteenApp.addPromotion(promotionList, Promo2);
+		assertEquals("Test that Promotion arraylist size is 2", 2, promotionList.size());
+	}
+	@Test
+	public void deletePromotionTest() {
+		// normal
+		Boolean ok = CanteenApp.doDeletePromotion(promotionList, "1-1 ICE MILO", "2020-8-22");
+		assertTrue("Test if item is ok to delete?", ok);
+		//error condition
+		ok = CanteenApp.doDeletePromotion(promotionList, "1-1 ICE MILO", "2020-8-22");
+		assertFalse("Test if same item is NOT ok to deletes again?", ok);	
+	}
+	@After
+	public void tearDown() throws Exception {
+		promo1 = null;
+		Promo2 = null;
+		promotionList = null;
+	}
 }
