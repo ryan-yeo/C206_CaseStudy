@@ -186,7 +186,7 @@ public class CanteenApp {
 			String itemName = Helper.readString("Enter Username > ");
 
 			for (int i = 0; i < MenuList.size(); i++) {
-				if (itemName == MenuList.get(i).getItemName()) {
+				if (itemName == MenuList.get(i).getName()) {
 					System.out.println("Staff " + itemName + "'s account has been deleted.");
 				} else {
 					System.out.println("Account does not exist.");
@@ -213,7 +213,7 @@ public class CanteenApp {
 				for (int i = 0; i < MenuList.size(); i++) {
 
 					output += String.format("%-10s %-30s %-10.2f\n", MenuList.get(i).getCategory(),
-							MenuList.get(i).getItemName(), MenuList.get(i).getPrice());
+							MenuList.get(i).getName(), MenuList.get(i).getPrice());
 
 				}
 				return output;
