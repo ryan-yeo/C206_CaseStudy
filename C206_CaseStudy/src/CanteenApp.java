@@ -148,8 +148,8 @@ public class CanteenApp {
 			boolean avail = false;
 			
 			for (MenuItem i: MenuList) {
-				if (item.equalsIgnoreCase(i.getName())) {
-					items1.add(new MenuItem(i.getCategory(), i.getName(), i.getPrice()));
+				if (item.equalsIgnoreCase(i.getItemName())) {
+					items1.add(new MenuItem(i.getCategory(), i.getItemName(), i.getPrice()));
 					System.out.println("Food item added!\n");
 					avail = true;
 					break;

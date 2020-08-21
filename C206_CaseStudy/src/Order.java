@@ -51,7 +51,7 @@ public class Order {
 
 		String itemList = "";
 		for (int i=0; i < items.size(); i++) {
-			itemList += items.get(i).getName();
+			itemList += items.get(i).getItemName();
 			if (i != (items.size()-1)) {
 				itemList += ", ";
 			}
