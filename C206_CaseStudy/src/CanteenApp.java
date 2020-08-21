@@ -46,7 +46,30 @@ public class CanteenApp {
 			switch (option) {
 				case 1: // User Account
 					
+					CanteenApp.setHeader("USER ACCOUNT MENU");
+					System.out.println("1. VIEW USER ACCOUNT");
+					System.out.println("2. CREATE USER ACCOUNT");
+					System.out.println("3. DELETE USER ACCOUNT");
+					int choice = Helper.readInt("Enter choice > ");
+				ArrayList<Account> accountList;
+				if(choice == 1) {
+						CanteenApp.viewAllAccounts(accountList);
+					}
+					else if(choice == 2){
+						Account acc = new Account(userAccount, accountPassword);
+						accountList.add(acc);
+						System.out.println("New Account Added!");
+						return;
+					}
+					else if(choice == 3) {
+						CanteenApp.deleteAccount(accountList);
+					}
+					else {
+						System.out.println("Account does not exist.");
+					}
+					
 					break;
+					
 					
 				case 2: // Menu Item
 
@@ -214,6 +237,60 @@ public class CanteenApp {
 	}
 // End
 /*=============================================================================================================================*/
+	//User Account CREATE, VIEW, DELETE -> By Akhil:
+
+	// Adding Account
+	
+	public static void addAccount(ArrayList<Account> accountList) {
+	
+
+		String userAccount = Helper.readString("Enter User Account Name: ");
+		String accountPassword = Helper.readString("Enter Account Password: ");
+
+		Account acc = new Account(userAccount, accountPassword);
+		accountList.add(acc);
+		System.out.println("New Account Added!");
+		return;
+
+	}
+
+	// Retrieving account list.
+	public static String retrieveAllAccounts(ArrayList<Account> accountList) {
+		String output = "";
+		for (int i = 0; i < accountList.size(); i++) {
+
+			output += String.format("%-10s %-30s %-10.2f\n", accountList.get(i).getUsername(),
+					accountList.get(i).getPassword(), accountList.get(i).getUserRole());
+
+		}
+		return output;
+	}
+
+	// Viewing Account List
+
+	public static void viewAllAccounts(ArrayList<Account> accountList) {
+	    for (int i = 0; i < accountList.size(); i++) {
+	      CanteenApp.setHeader("ACCOUNT LIST");
+	      String output = String.format("%-10s %-30s %-10s\n", "USERNAME", "PASSWORD", "USER ROLE");
+	      output += retrieveAllAccounts(accountList);
+	      System.out.println(output); }
+	    
+	    }
+
+	public static void deleteAccount(ArrayList<Account> accountList) {
+		
+		CanteenApp.viewAllAccounts(accountList);
+		String username = Helper.readString("Enter Username > ");
+		
+		for(int i = 0; i < accountList.size(); i++) {
+			if (username == accountList.get(i).getUsername()) {
+				System.out.println("Staff " + username + "'s account has been deleted.");
+			} else {
+				System.out.println("Account does not exist.");
+			}
+		}
+	}
+
 
 	
 	
