@@ -237,7 +237,7 @@ public class CanteenApp {
 		Helper.line(80, "-");
 		System.out.println("Add Order");
 		Helper.line(80, "-");
-		
+		 
 		ArrayList<MenuItem> items1 = new ArrayList<MenuItem>();
 		String username = Helper.readString("Enter your username > ");
 		String status = "Processing";

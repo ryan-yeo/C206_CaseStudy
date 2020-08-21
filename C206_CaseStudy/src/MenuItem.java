@@ -17,10 +17,10 @@ public class MenuItem {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public String getItemName() {
+	public String getName() {
 		return name;
 	}
-	public void setItemName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	public double getPrice() {
