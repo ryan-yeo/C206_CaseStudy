@@ -99,6 +99,7 @@ public class CanteenApp {
 					}
 					break;
 
+					break;
 					
 				case 3: // Start of Order -> By Vanessa
 					String orderMenu[] = {"View Order", "Add Order", "Delete Order"};
