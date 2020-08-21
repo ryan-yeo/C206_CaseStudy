@@ -17,10 +17,10 @@ public class MenuItem {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public String getItemName() {
+	public String getName() {
 		return name;
 	}
-	public void setItemName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	public double getPrice() {
@@ -33,4 +33,7 @@ public class MenuItem {
 	public void setPrice(float price) {
 		this.price = price;
 	}
+	public String toString() {
+        return String.format("%-20s %-20s $%.2f\n", getCategory(), getName(), getPrice());
+    }
 }

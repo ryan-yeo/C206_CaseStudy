@@ -46,17 +46,65 @@ public class CanteenApp {
 			switch (option) {
 				case 1: // User Account
 					
+					CanteenApp.setHeader("USER ACCOUNT MENU");
+					System.out.println("1. VIEW USER ACCOUNT");
+					System.out.println("2. CREATE USER ACCOUNT");
+					System.out.println("3. DELETE USER ACCOUNT");
+					int choice = Helper.readInt("Enter choice > ");
+				ArrayList<Account> accountList;
+				if(choice == 1) {
+//						CanteenApp.viewAllAccounts(accountList);
+					}
+					else if(choice == 2){
+//						Account acc = new Account(userAccount, accountPassword);
+//						accountList.add(acc);
+						System.out.println("New Account Added!");
+						return;
+					}
+					else if(choice == 3) {
+//						CanteenApp.deleteAccount(accountList);
+					}
+					else {
+						System.out.println("Account does not exist.");
+					}
+					
 					break;
+					
 					
 				case 2: // Menu Item
 
+					String Menu[] = { "View Menu", "Add Menu Item", "Delete Menu Item" };
+					String p = "";
+					Helper.line(80, "-");
+					System.out.println("MENU");
+					Helper.line(80, "-");
+					for (int i = 0; i < Menu.length; i++) {
+						p += String.format("%d. %s\n", (i + 1), Menu[i]);
+					}
+					System.out.println(p);
+					int menuC = Helper.readInt("Enter choice > ");
+
+					switch (menuC) {
+					case 1:
+						viewAllMenuItem(MenuList);
+						break;
+					case 2:
+						addMenuItem(MenuList);
+						break;
+					case 3:
+						deleteMenuItem(MenuList);
+						break;
+					default:
+						System.out.println("Invalid Input!");
+						break;
+					}
 					break;
 					
 				case 3: // Start of Order -> By Vanessa
 					String orderMenu[] = {"View Order", "Add Order", "Delete Order"};
 					String output = "";
 					Helper.line(80, "-");
-					System.out.println("ORDER MENU");
+					System.out.println("ORDER");
 					Helper.line(80, "-");
 					for (int i = 0; i < orderMenu.length; i++) {
 						output += String.format("%d. %s\n", (i+1), orderMenu[i]);
@@ -84,19 +132,19 @@ public class CanteenApp {
 					break;
 					
 				case 5: // Promotion -> NICOLE
-					CanteenApp.setHeader("PROMOTION MENU");
+					CanteenApp.setHeader("PROMOTION");
 					System.out.println("1. View Promotion");
 					System.out.println("2. Add Promotion");
 					System.out.println("3. Delete Promotion");
-					int choice = Helper.readInt("Enter choice > ");
-					if(choice == 1) {
+					int choice1 = Helper.readInt("Enter choice > ");
+					if(choice1 == 1) {
 						CanteenApp.viewAllPromotion(promotionList);
 					}
-					else if(choice == 2){
+					else if(choice1 == 2){
 						Promotion promo = inputPromotion();
 						CanteenApp.addPromotion(promotionList, promo);
 					}
-					else if(choice == 3) {
+					else if(choice1 == 3) {
 						CanteenApp.deletePromotion(promotionList);
 					}
 					else {
@@ -131,7 +179,46 @@ public class CanteenApp {
 	}
 // End
 /*=============================================================================================================================*/	
-	
+	// -----RyanStart-----\\
+		private static void deleteMenuItem(ArrayList<MenuItem> menuList2) {
+			CanteenApp.viewAllMenuItem(MenuList);
+			String itemName = Helper.readString("Enter Username > ");
+
+			for (int i = 0; i < MenuList.size(); i++) {
+//				if (itemName == MenuList.get(i).getItemName()) {
+					System.out.println("Staff " + itemName + "'s account has been deleted.");
+//				} else {
+					System.out.println("Account does not exist.");
+				}
+			}
+			
+
+//		}
+
+		private static void addMenuItem(ArrayList<MenuItem> menuList2) {
+			String category = Helper.readString("Enter Category:");
+			String itemName = Helper.readString("Enter User item Name: ");
+			double price = Helper.readDouble("Enter item price: ");
+
+			MenuItem a = new MenuItem(category, itemName, price);
+			MenuList.add(a);
+			System.out.println("New Item Added!");
+			return;
+
+		}
+
+		private static String viewAllMenuItem(ArrayList<MenuItem> menuList2) {
+				String output = "";
+				for (int i = 0; i < MenuList.size(); i++) {
+
+//					output += String.format("%-10s %-30s %-10.2f\n", MenuList.get(i).getCategory(),
+//							MenuList.get(i).getItemName(), MenuList.get(i).getPrice());
+
+				}
+				return output;
+
+		}
+		// -----RyanEnd-----\\
 /*=============================================================================================================================*/
 // Header by NICOLE
 	public static void setHeader(String header) {
@@ -143,7 +230,8 @@ public class CanteenApp {
 	
 
 /*=============================================================================================================================*/
-// Start -> By Vanessa:
+// Start -> By Vanessa: (Works with menu (Menu Missing), Tested on my own mini sandbox)
+
 	public static void addOrder(ArrayList<Order> items) {
 		viewAllMenuItem(MenuList);
 		Helper.line(80, "-");
@@ -214,6 +302,60 @@ public class CanteenApp {
 	}
 // End
 /*=============================================================================================================================*/
+	//User Account CREATE, VIEW, DELETE -> By Akhil:
+
+	// Adding Account
+	
+	public static void addAccount(ArrayList<Account> accountList) {
+	
+
+		String userAccount = Helper.readString("Enter User Account Name: ");
+		String accountPassword = Helper.readString("Enter Account Password: ");
+
+		Account acc = new Account(userAccount, accountPassword);
+		accountList.add(acc);
+		System.out.println("New Account Added!");
+		return;
+
+	}
+
+	// Retrieving account list.
+	public static String retrieveAllAccounts(ArrayList<Account> accountList) {
+		String output = "";
+		for (int i = 0; i < accountList.size(); i++) {
+
+			output += String.format("%-10s %-30s %-10.2f\n", accountList.get(i).getUsername(),
+					accountList.get(i).getPassword(), accountList.get(i).getUserRole());
+
+		}
+		return output;
+	}
+
+	// Viewing Account List
+
+	public static void viewAllAccounts(ArrayList<Account> accountList) {
+	    for (int i = 0; i < accountList.size(); i++) {
+	      CanteenApp.setHeader("ACCOUNT LIST");
+	      String output = String.format("%-10s %-30s %-10s\n", "USERNAME", "PASSWORD", "USER ROLE");
+	      output += retrieveAllAccounts(accountList);
+	      System.out.println(output); }
+	    
+	    }
+
+	public static void deleteAccount(ArrayList<Account> accountList) {
+		
+		CanteenApp.viewAllAccounts(accountList);
+		String username = Helper.readString("Enter Username > ");
+		
+		for(int i = 0; i < accountList.size(); i++) {
+			if (username == accountList.get(i).getUsername()) {
+				System.out.println("Staff " + username + "'s account has been deleted.");
+			} else {
+				System.out.println("Account does not exist.");
+			}
+		}
+	}
+
 
 	
 	

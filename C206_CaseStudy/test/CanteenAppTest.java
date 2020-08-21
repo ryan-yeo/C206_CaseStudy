@@ -69,8 +69,10 @@ public class CanteenAppTest {
 		xx.add(new MenuItem("Western", "Chicken Chop", 5.90));
 		ArrayList<Order> OrderList = new ArrayList<Order>();
 		OrderList.add(new Order("Vanny", "Processing", true, xx));
-		
 		assertEquals("Check arrayList size is 1", 1, OrderList.size());
+		
+		ArrayList<Order> OrderList1 = new ArrayList<Order>();
+		assertEquals("Check arrayList size is 0", 0, OrderList1.size());
 		
 		String output ="";
 		for (Order i : OrderList) {
