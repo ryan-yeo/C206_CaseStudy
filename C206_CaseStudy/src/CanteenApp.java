@@ -53,18 +53,16 @@ public class CanteenApp {
 					int choice = Helper.readInt("Enter choice > ");
 				ArrayList<Account> accountList;
 				if(choice == 1) {
-						CanteenApp.viewAllAccounts(accountList);
+//						CanteenApp.viewAllAccounts(accountList);
 					}
 					else if(choice == 2){
-						String accountPassword;
-						String userAccount;
-						Account acc = new Account(userAccount, accountPassword);
-						accountList.add(acc);
+//						Account acc = new Account(userAccount, accountPassword);
+//						accountList.add(acc);
 						System.out.println("New Account Added!");
 						return;
 					}
 					else if(choice == 3) {
-						CanteenApp.deleteAccount(accountList);
+//						CanteenApp.deleteAccount(accountList);
 					}
 					else {
 						System.out.println("Account does not exist.");
@@ -98,9 +96,8 @@ public class CanteenApp {
 						break;
 					default:
 						System.out.println("Invalid Input!");
+						break;
 					}
-					break;
-
 					break;
 					
 				case 3: // Start of Order -> By Vanessa
@@ -139,15 +136,15 @@ public class CanteenApp {
 					System.out.println("1. View Promotion");
 					System.out.println("2. Add Promotion");
 					System.out.println("3. Delete Promotion");
-					int choice = Helper.readInt("Enter choice > ");
-					if(choice == 1) {
+					int choice1 = Helper.readInt("Enter choice > ");
+					if(choice1 == 1) {
 						CanteenApp.viewAllPromotion(promotionList);
 					}
-					else if(choice == 2){
+					else if(choice1 == 2){
 						Promotion promo = inputPromotion();
 						CanteenApp.addPromotion(promotionList, promo);
 					}
-					else if(choice == 3) {
+					else if(choice1 == 3) {
 						CanteenApp.deletePromotion(promotionList);
 					}
 					else {
@@ -188,15 +185,15 @@ public class CanteenApp {
 			String itemName = Helper.readString("Enter Username > ");
 
 			for (int i = 0; i < MenuList.size(); i++) {
-				if (itemName == MenuList.get(i).getName()) {
+//				if (itemName == MenuList.get(i).getItemName()) {
 					System.out.println("Staff " + itemName + "'s account has been deleted.");
-				} else {
+//				} else {
 					System.out.println("Account does not exist.");
 				}
 			}
 			
 
-		}
+//		}
 
 		private static void addMenuItem(ArrayList<MenuItem> menuList2) {
 			String category = Helper.readString("Enter Category:");
@@ -214,8 +211,8 @@ public class CanteenApp {
 				String output = "";
 				for (int i = 0; i < MenuList.size(); i++) {
 
-					output += String.format("%-10s %-30s %-10.2f\n", MenuList.get(i).getCategory(),
-							MenuList.get(i).getName(), MenuList.get(i).getPrice());
+//					output += String.format("%-10s %-30s %-10.2f\n", MenuList.get(i).getCategory(),
+//							MenuList.get(i).getItemName(), MenuList.get(i).getPrice());
 
 				}
 				return output;
@@ -233,13 +230,14 @@ public class CanteenApp {
 	
 
 /*=============================================================================================================================*/
-// Start -> By Vanessa:
+// Start -> By Vanessa: (Works with menu (Menu Missing), Tested on my own mini sandbox)
+
 	public static void addOrder(ArrayList<Order> items) {
 		viewAllMenuItem(MenuList);
 		Helper.line(80, "-");
 		System.out.println("Add Order");
 		Helper.line(80, "-");
-		 
+		
 		ArrayList<MenuItem> items1 = new ArrayList<MenuItem>();
 		String username = Helper.readString("Enter your username > ");
 		String status = "Processing";
