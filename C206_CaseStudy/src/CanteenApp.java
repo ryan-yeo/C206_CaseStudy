@@ -79,7 +79,7 @@ public class CanteenApp {
 					String orderMenu[] = {"View Order", "Add Order", "Delete Order"};
 					String output = "";
 					Helper.line(80, "-");
-					System.out.println("ORDER MENU");
+					System.out.println("ORDER");
 					Helper.line(80, "-");
 					for (int i = 0; i < orderMenu.length; i++) {
 						output += String.format("%d. %s\n", (i+1), orderMenu[i]);
@@ -107,7 +107,7 @@ public class CanteenApp {
 					break;
 					
 				case 5: // Promotion -> NICOLE
-					CanteenApp.setHeader("PROMOTION MENU");
+					CanteenApp.setHeader("PROMOTION");
 					System.out.println("1. View Promotion");
 					System.out.println("2. Add Promotion");
 					System.out.println("3. Delete Promotion");
