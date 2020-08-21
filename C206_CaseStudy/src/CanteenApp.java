@@ -73,7 +73,32 @@ public class CanteenApp {
 					
 				case 2: // Menu Item
 
+					String Menu[] = { "View Menu", "Add Menu Item", "Delete Menu Item" };
+					String p = "";
+					Helper.line(80, "-");
+					System.out.println("MENU");
+					Helper.line(80, "-");
+					for (int i = 0; i < Menu.length; i++) {
+						p += String.format("%d. %s\n", (i + 1), Menu[i]);
+					}
+					System.out.println(p);
+					int menuC = Helper.readInt("Enter choice > ");
+
+					switch (menuC) {
+					case 1:
+						viewAllMenuItem(MenuList);
+						break;
+					case 2:
+						addMenuItem(MenuList);
+						break;
+					case 3:
+						deleteMenuItem(MenuList);
+						break;
+					default:
+						System.out.println("Invalid Input!");
+					}
 					break;
+
 					
 				case 3: // Start of Order -> By Vanessa
 					String orderMenu[] = {"View Order", "Add Order", "Delete Order"};
