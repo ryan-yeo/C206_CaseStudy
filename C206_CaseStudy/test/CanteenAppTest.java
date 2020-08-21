@@ -110,6 +110,7 @@ public class CanteenAppTest {
 		ok = CanteenApp.doDeletePromotion(promotionList, "1-1 ICE MILO", "2020-8-22");
 		assertFalse("Test if same item is NOT ok to deletes again?", ok);	
 	}
+// NICOLE Promotion Test END
 	@After
 	public void tearDown() throws Exception {
 		promo1 = null;
