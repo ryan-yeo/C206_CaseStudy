@@ -154,7 +154,46 @@ public class CanteenApp {
 	}
 // End
 /*=============================================================================================================================*/	
-	
+	// -----RyanStart-----\\
+		private static void deleteMenuItem(ArrayList<MenuItem> menuList2) {
+			CanteenApp.viewAllMenuItem(MenuList);
+			String itemName = Helper.readString("Enter Username > ");
+
+			for (int i = 0; i < MenuList.size(); i++) {
+				if (itemName == MenuList.get(i).getItemName()) {
+					System.out.println("Staff " + itemName + "'s account has been deleted.");
+				} else {
+					System.out.println("Account does not exist.");
+				}
+			}
+			
+
+		}
+
+		private static void addMenuItem(ArrayList<MenuItem> menuList2) {
+			String category = Helper.readString("Enter Category:");
+			String itemName = Helper.readString("Enter User item Name: ");
+			double price = Helper.readDouble("Enter item price: ");
+
+			MenuItem a = new MenuItem(category, itemName, price);
+			MenuList.add(a);
+			System.out.println("New Item Added!");
+			return;
+
+		}
+
+		private static String viewAllMenuItem(ArrayList<MenuItem> menuList2) {
+				String output = "";
+				for (int i = 0; i < MenuList.size(); i++) {
+
+					output += String.format("%-10s %-30s %-10.2f\n", MenuList.get(i).getCategory(),
+							MenuList.get(i).getItemName(), MenuList.get(i).getPrice());
+
+				}
+				return output;
+
+		}
+		// -----RyanEnd-----\\
 /*=============================================================================================================================*/
 // Header by NICOLE
 	public static void setHeader(String header) {
