@@ -36,7 +36,7 @@ public class CanteenAppTest {
 		assertEquals("Check Status is processing", "Processing", OrderList.get(0).getStatus());
 		assertEquals("Check Takeaway is true", true, OrderList.get(0).isTakeaway());
 		assertEquals("Check Menu category is Western", "Western", OrderList.get(0).getItems().get(0).getCategory());
-		assertEquals("Check food item is Fish n' Chips", "Fish n' Chips", OrderList.get(0).getItems().get(0).getItemName());
+		assertEquals("Check food item is Fish n' Chips", "Fish n' Chips", OrderList.get(0).getItems().get(0).getName());
 		
 		boolean check = false;
 		if (OrderList.get(0).getItems().get(0).getPrice() == 8.9) {
