@@ -5,9 +5,22 @@ public class CanteenApp {
 	// Start - By Vanessa:
 	private static ArrayList<Order> OrderList = new ArrayList<Order>();
 	// End
-	
+	//-----RyanStart-----\\
+	private static ArrayList<MenuItem> MenuList = new ArrayList<MenuItem>();
+	//-----RyanEnd-----\\
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		//-----RyanStart-----\\
+
+		MenuList.add(new MenuItem("Indian", "Prata", 4.99));
+		MenuList.add(new MenuItem("Middle East", "Kebab", 6.99));
+		MenuList.add(new MenuItem("Western", "Chicken Chop", 5.90));
+		MenuList.add(new MenuItem("Western", "Fish n' Chips", 8.90));
+		MenuList.add(new MenuItem("Local", "Fried Rice", 5.0));
+		
+		//-----RyanEnd-----\\
+		
 		
 		// Start - By Vanessa: 
 		int option = 0;
@@ -148,8 +161,8 @@ public class CanteenApp {
 			boolean avail = false;
 			
 			for (MenuItem i: MenuList) {
-				if (item.equalsIgnoreCase(i.getItemName())) {
-					items1.add(new MenuItem(i.getCategory(), i.getItemName(), i.getPrice()));
+				if (item.equalsIgnoreCase(i.getName())) {
+					items1.add(new MenuItem(i.getCategory(), i.getName(), i.getPrice()));
 					System.out.println("Food item added!\n");
 					avail = true;
 					break;
