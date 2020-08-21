@@ -56,7 +56,7 @@ public class CanteenApp {
 						CanteenApp.viewAllAccounts(accountList);
 					}
 					else if(choice == 2){
-						Account acc = new Account(userAccount, accountPassword);
+					//	Account acc = new Account(userAccount, accountPassword);
 						accountList.add(acc);
 						System.out.println("New Account Added!");
 						return;
