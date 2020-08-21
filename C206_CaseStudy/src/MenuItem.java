@@ -33,4 +33,7 @@ public class MenuItem {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-} 
+	public String toString() {
+        return String.format("%-20s %-20s $%.2f\n", getCategory(), getName(), getPrice());
+    }
+}
