@@ -1,5 +1,4 @@
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -89,7 +88,7 @@ public class CanteenAppTest {
 		assertNotNull("Check if there is valid Promotion arraylist to add to", promotionList);
 		//Given an empty list, after adding 1 item, the size of the list is 1 - normal
 		//The item just added is as same as the first item of the list
-		CanteenApp.addPromotion(promotionList, promo1);
+		CanteenApp.addPromotion(promotionList);
 		assertEquals("Check that Promotion arraylist size is 1", 1, promotionList.size());
 		assertSame("Check that Camcorder is added", promo1, promotionList.get(0));
 	}
@@ -99,8 +98,8 @@ public class CanteenAppTest {
 		// Test if Item list is not null but empty - boundary
 		assertNotNull("Test if there is valid Chromebook arraylist to retrieve item from", promotionList);
 		//Given an empty list, after adding 2 items, test if the size of the list is 2 - normal
-		CanteenApp.addPromotion(promotionList, promo1);
-		CanteenApp.addPromotion(promotionList, Promo2);
+		CanteenApp.addPromotion(promotionList);
+		CanteenApp.addPromotion(promotionList);
 		assertEquals("Test that Promotion arraylist size is 2", 2, promotionList.size());
 	}
 	@Test
