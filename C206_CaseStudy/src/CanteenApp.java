@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 public class CanteenApp {
 
@@ -151,15 +153,17 @@ public class CanteenApp {
 				System.out.println("1. View Promotion");
 				System.out.println("2. Add Promotion");
 				System.out.println("3. Delete Promotion");
+				System.out.println("4. Update Promotion");
 				choice = Helper.readInt("Enter choice > ");
 
 				if (choice == 1) {
 					CanteenApp.viewAllPromotion(promotionList);
 				} else if (choice == 2) {
-					Promotion promo = inputPromotion();
-					CanteenApp.addPromotion(promotionList, promo);
+					CanteenApp.addPromotion(promotionList);
 				} else if (choice == 3) {
 					CanteenApp.deletePromotion(promotionList);
+				} else if (choice == 4) {
+					CanteenApp.updatePromotion(promotionList);
 				} else {
 					System.out.println("Invalid Choice Input.");
 				}
@@ -436,19 +440,21 @@ public class CanteenApp {
 	 * ================================================
 	 */
 //Promotion ADD, VIEW DELETE BY NICOLE
-	public static Promotion inputPromotion() {
+	public static void addPromotion(ArrayList<Promotion> promotionList) {
 		String promoCode = Helper.readString("Enter Promotion Code: ");
 		String endingDate = Helper.readString("Enter Promotion End Date: ");
-		double disAmount = Helper.readDouble("Enter Discount Amount: ");
-
-		Promotion promo = new Promotion(promoCode, endingDate, disAmount);
-		return promo;
-
-	}
-
-	public static void addPromotion(ArrayList<Promotion> promotionList, Promotion promo) {
-		promotionList.add(promo);
-		System.out.println("Promotion added");
+		ZoneId S = ZoneId.of("Singapore");
+		LocalDate date = LocalDate.now(S);
+		LocalDate ending = LocalDate.parse(endingDate);
+		if(promoCode.startsWith("Promo") && date.isBefore(ending)) {
+			double disAmount = Helper.readDouble("Enter Discount Amount: ");
+			Promotion promo = new Promotion(promoCode, endingDate, disAmount);
+			promotionList.add(promo);
+			System.out.println("Promotion added");
+		}
+		else {
+			System.out.println("input of promotion code or Date does not the requirement");
+		}
 	}
 
 	public static Boolean doDeletePromotion(ArrayList<Promotion> promotionList, String promotionCode, String endDate) {
@@ -493,6 +499,32 @@ public class CanteenApp {
 		String output = String.format("%-20s %-20s %-20s\n", "PROMOTION CODE", "END DATE", "DISCOUNT AMOUNT");
 		output += retrieveAllPromotion(promotionList);
 		System.out.println(output);
+	}
+	public static void updatePromotion(ArrayList<Promotion> promotionList) {
+		String oldPromoCode = Helper.readString("Enter Old Promotion Code To Update: ");
+		for (int i = 0; i < promotionList.size(); i++) {
+			if(promotionList.get(i).getPromotionCode().equals(oldPromoCode)) {
+				String newPromoCode = Helper.readString("Enter New promotion Code: ");
+				String newEndingDate = Helper.readString("Enter New Promotion End Date: ");
+				ZoneId S = ZoneId.of("Singapore");
+				LocalDate date = LocalDate.now(S);
+				LocalDate ending = LocalDate.parse(newEndingDate);
+				if(newPromoCode.startsWith("Promo") && date.isBefore(ending)) {
+					double newDisAmount = Helper.readDouble("Enter New Discount Amount: ");
+					promotionList.get(i).setPromotionCode(newPromoCode);
+					promotionList.get(i).setEndFate(newEndingDate);
+					promotionList.get(i).setDiscountAmount(newDisAmount);
+					System.out.println("Promotion Updateded");
+				}
+				else {
+					System.out.println("input of promotion code or Date does not the requirement");
+				}
+			}
+			else {
+				System.out.println("Invalid promotion. Please try again");
+			}
+		}
+		
 	}
 	/*
 	 * =============================================================================
