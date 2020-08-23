@@ -8,23 +8,22 @@ public class CanteenApp {
 	private static ArrayList<Order> OrderList = new ArrayList<Order>();
 	// End
 
-	// sajnam
+	// Start - sajnam
 	private static ArrayList<PurchaseOrder> purchaseList = new ArrayList<PurchaseOrder>();
-
+	// end
+	
 	// -----RyanStart-----\\
 	private static ArrayList<MenuItem> MenuList = new ArrayList<MenuItem>();
 	// -----RyanEnd-----\\
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 		// -----RyanStart-----\\
-
 		MenuList.add(new MenuItem("Indian", "Prata", 4.99));
 		MenuList.add(new MenuItem("Middle East", "Kebab", 6.99));
 		MenuList.add(new MenuItem("Western", "Chicken Chop", 5.90));
 		MenuList.add(new MenuItem("Western", "Fish n' Chips", 8.90));
 		MenuList.add(new MenuItem("Local", "Fried Rice", 5.0));
-
 		// -----RyanEnd-----\\
 
 		// Start - By Vanessa:
@@ -49,7 +48,7 @@ public class CanteenApp {
 			System.out.println("");
 
 			switch (option) {
-			case 1: // User Account
+			case 1: // User Account -> Akhil
 
 				CanteenApp.setHeader("USER ACCOUNT MENU");
 				System.out.println("1. VIEW USER ACCOUNT");
@@ -73,7 +72,7 @@ public class CanteenApp {
 
 				break;
 
-			case 2: // Menu Item
+			case 2: // Menu Item -> Ryan
 
 				String Menu[] = { "View Menu", "Add Menu Item", "Delete Menu Item" };
 				String p = "";
@@ -129,7 +128,7 @@ public class CanteenApp {
 				}
 				break; // End of Order
 
-			case 4: // Purchase Order
+			case 4: // Purchase Order -> Rai
 				CanteenApp.setHeader("PURCHASE ORDER");
 				System.out.println("1. View Purchase Order");
 				System.out.println("2. Add Purchase Order");
@@ -180,10 +179,7 @@ public class CanteenApp {
 		}
 	}
 
-	/*
-	 * =============================================================================
-	 * ================================================
-	 */
+/*=============================================================================================================================*/
 // Start -> By Vanessa:
 	public static void optionMenu() {
 		Helper.line(80, "-");
@@ -197,26 +193,33 @@ public class CanteenApp {
 		System.out.println(output);
 
 	}
-
-// End
-	/*
-	 * =============================================================================
-	 * ================================================
-	 */
-	// -----RyanStart-----\\
+	
+	public static void userTypeMenu() {
+		Helper.line(80, "-");
+		System.out.println("USER TYPE MENU");
+		Helper.line(80, "-");
+		String output = "";
+		String list[] = { "Canteen Admin", "Stall Staff", "Customer" };
+		for (int i = 0; i < list.length; i++) {
+			output += String.format("%d. %s\n", (i + 1), list[i]);
+		}
+		System.out.println(output);
+	}
+	
+/*=============================================================================================================================*/
+// -----RyanStart-----\\
 	private static void deleteMenuItem(ArrayList<MenuItem> menuList2) {
 		CanteenApp.viewAllMenuItem(MenuList);
 		String itemName = Helper.readString("Enter Username > ");
 
 		for (int i = 0; i < MenuList.size(); i++) {
-//				if (itemName == MenuList.get(i).getItemName()) {
-			System.out.println("Staff " + itemName + "'s account has been deleted.");
-//				} else {
-			System.out.println("Account does not exist.");
+//			if (itemName == MenuList.get(i).getItemName()) {
+				System.out.println("Staff " + itemName + "'s account has been deleted.");
+//			} else {
+				System.out.println("Account does not exist.");
+//			}
 		}
 	}
-
-//		}
 
 	private static void addMenuItem(ArrayList<MenuItem> menuList2) {
 		String category = Helper.readString("Enter Category:");
@@ -241,17 +244,12 @@ public class CanteenApp {
 		return output;
 
 	}
-
-	// -----RyanEnd-----\\
-	/*
-	 * =============================================================================
-	 * ================================================
-	 */
-
-	// User Account CREATE, VIEW, DELETE -> By Akhil:
+	
+// -----RyanEnd-----\\
+/*=============================================================================================================================*/
+// User Account CREATE, VIEW, DELETE -> By Akhil:
 
 	// Adding Account
-
 	public static void addAccount(ArrayList<Account> accountList) {
 
 		String userAccount = Helper.readString("Enter User Account Name: ");
@@ -277,7 +275,6 @@ public class CanteenApp {
 	}
 
 	// Viewing Account List
-
 	public static void viewAllAccounts(ArrayList<Account> accountList) {
 		for (int i = 0; i < accountList.size(); i++) {
 			CanteenApp.setHeader("ACCOUNT LIST");
@@ -301,22 +298,16 @@ public class CanteenApp {
 			}
 		}
 	}
-
+	
+/*=============================================================================================================================*/
 // Header by NICOLE
 	public static void setHeader(String header) {
 		Helper.line(80, "-");
 		System.out.println(header);
 		Helper.line(80, "-");
 	}
-	/*
-	 * =============================================================================
-	 * ================================================
-	 */
-
-	/*
-	 * =============================================================================
-	 * ================================================
-	 */
+	
+/*=============================================================================================================================*/
 // Start -> By Vanessa: (Works with menu (Menu Missing), Tested on my own mini sandbox)
 
 	public static void addOrder(ArrayList<Order> items) {
@@ -387,12 +378,9 @@ public class CanteenApp {
 		}
 		System.out.println(output);
 	}
-// End
-	/*
-	 * =============================================================================
-	 * ================================================
-	 */
-
+	
+/*=============================================================================================================================*/
+// By Rai
 	public static void addPurchaseOrder(ArrayList<PurchaseOrder> purchaseList) {
 
 		CanteenApp.setHeader("ADD PURCHASE ORDER");
@@ -435,10 +423,7 @@ public class CanteenApp {
 
 	}
 
-	/*
-	 * =============================================================================
-	 * ================================================
-	 */
+/*=============================================================================================================================*/
 //Promotion ADD, VIEW DELETE BY NICOLE
 	public static void addPromotion(ArrayList<Promotion> promotionList) {
 		String promoCode = Helper.readString("Enter Promotion Code: ");
@@ -500,6 +485,7 @@ public class CanteenApp {
 		output += retrieveAllPromotion(promotionList);
 		System.out.println(output);
 	}
+	
 	public static void updatePromotion(ArrayList<Promotion> promotionList) {
 		String oldPromoCode = Helper.readString("Enter Old Promotion Code To Update: ");
 		for (int i = 0; i < promotionList.size(); i++) {
@@ -526,9 +512,6 @@ public class CanteenApp {
 		}
 		
 	}
-	/*
-	 * =============================================================================
-	 * ================================================
-	 */
-
+	
+/*=============================================================================================================================*/
 }
