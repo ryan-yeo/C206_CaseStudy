@@ -102,7 +102,7 @@ public class CanteenApp {
 				break;
 
 			case 3: // Start of Order -> By Vanessa
-				String orderMenu[] = { "View Order", "Add Order", "Delete Order" };
+				String orderMenu[] = { "View Order", "Add Order", "Update Order", "Delete Order" };
 				String output = "";
 				Helper.line(80, "-");
 				System.out.println("ORDER");
@@ -121,10 +121,14 @@ public class CanteenApp {
 					addOrder(OrderList);
 					break;
 				case 3:
-					deleteOrder(OrderList);
+					updateOrder(OrderList);
 					break;
+				case 4:
+					deleteOrder(OrderList);
+					break;				
 				default:
 					System.out.println("Invalid Input!");
+					break;
 				}
 				break; // End of Order
 
@@ -377,6 +381,10 @@ public class CanteenApp {
 			output += i.toString();
 		}
 		System.out.println(output);
+	}
+	
+	public static void updateOrder(ArrayList<Order> items) {
+		
 	}
 	
 /*=============================================================================================================================*/
