@@ -1,5 +1,4 @@
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -89,7 +88,7 @@ public class CanteenAppTest {
 		assertNotNull("Check if there is valid Promotion arraylist to add to", promotionList);
 		//Given an empty list, after adding 1 item, the size of the list is 1 - normal
 		//The item just added is as same as the first item of the list
-		CanteenApp.addPromotion(promotionList, promo1);
+		CanteenApp.addPromotion(promotionList);
 		assertEquals("Check that Promotion arraylist size is 1", 1, promotionList.size());
 		assertSame("Check that Camcorder is added", promo1, promotionList.get(0));
 	}
@@ -99,18 +98,21 @@ public class CanteenAppTest {
 		// Test if Item list is not null but empty - boundary
 		assertNotNull("Test if there is valid Chromebook arraylist to retrieve item from", promotionList);
 		//Given an empty list, after adding 2 items, test if the size of the list is 2 - normal
-		CanteenApp.addPromotion(promotionList, promo1);
-		CanteenApp.addPromotion(promotionList, Promo2);
+		CanteenApp.addPromotion(promotionList);
+		CanteenApp.addPromotion(promotionList);
 		assertEquals("Test that Promotion arraylist size is 2", 2, promotionList.size());
 	}
 	@Test
 	public void deletePromotionTest() {
-		// normal
-		Boolean ok = CanteenApp.doDeletePromotion(promotionList, "1-1 ICE MILO", "2020-8-22");
-		assertTrue("Test if item is ok to delete?", ok);
-		//error condition
-		ok = CanteenApp.doDeletePromotion(promotionList, "1-1 ICE MILO", "2020-8-22");
-		assertFalse("Test if same item is NOT ok to deletes again?", ok);	
+		ArrayList<Promotion> promotionList = new ArrayList<Promotion>();
+		promotionList.add(new Promotion("1-1 ICE MILO", "2020-08-22", 1));
+		
+		boolean check = false;
+		if (promotionList.get(0).getPromotionCode().equalsIgnoreCase("1-1 ICE MILO") && promotionList.get(0).getEndDate().equalsIgnoreCase("2020-08-22")) {
+			promotionList.remove(0);
+			check = true;
+		}
+		assertTrue(check);
 	}
 // NICOLE Promotion Test END
 	@After
