@@ -286,18 +286,25 @@ public class CanteenApp {
 	}
 	
 	public static void addOrder(ArrayList<Order> items) {
-//		viewAllMenuItem(MenuList);
 
 		Helper.line(100, "-");
 		System.out.println("Add Order");
 		Helper.line(100, "-");
 		
 		ArrayList<MenuItem> items1 = new ArrayList<MenuItem>();
-		String username = Helper.readString("Enter your username > ");
+		
+		String username = "";
+		while (username.isBlank()) {
+			username = Helper.readString("Enter your username > ");
+			if (username.isBlank()) {
+				System.out.println("Username cannot be empty!\n");
+			}
+		}
+		
 		String status = "Processing";
 		boolean takeaway = Helper.readBoolean("Takeaway? (True/False) > ");
 		boolean preOrder = Helper.readBoolean("Pre-order? (True/False) > ");
-		
+		System.out.println("");
 		String patternDate = "(0[1-9]||[1-2][0-9]||30)-(0[1-9]||1[0-2])-202[0-1]";
 		String patternTime = "([0-1][0-9]||2[0-3]):([0-5][0-9])";
 		
@@ -308,6 +315,7 @@ public class CanteenApp {
 			while (date == null) {
 				inputdate = Helper.readString("Enter collection date (DD-MM-YYYY) > ");
 				inputtime = Helper.readStringRegEx("Enter collection time (HH:MM) >", patternTime); 	// add a method in the Helper.java
+				System.out.println("");
 				if (Pattern.matches(patternDate, inputdate)) {
 					DateTime = inputdate + " " + inputtime;
 					LocalDateTime input1 = LocalDateTime.parse(DateTime, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
@@ -325,6 +333,7 @@ public class CanteenApp {
 				}
 			}	
 		}
+
 		String input = "";
 		double price = 0;
 		
