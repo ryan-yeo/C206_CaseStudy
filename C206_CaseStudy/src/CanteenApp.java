@@ -486,7 +486,7 @@ public class CanteenApp {
 		String input = "";
 		double price = 0;
 		
-		MyViewAllMenuItem(MyMenuList);
+		MyViewAllMenuItem(MenuList);
 		while (!input.equalsIgnoreCase("N")) {
 			String item = Helper.readString("Enter food > ");
 			boolean avail = false;
