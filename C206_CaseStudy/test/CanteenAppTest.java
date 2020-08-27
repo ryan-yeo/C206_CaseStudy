@@ -189,7 +189,7 @@ public class CanteenAppTest {
 
 // End - Order
 
-// sajnam promotion test
+// sajnam promotion test add, delete , view
 	@Test
 	public void addPurchaseOrderTest() {
 //		PurchaseOrder po1 = new PurchaseOrder("", 2, 2.20, "2020-9-20");

@@ -158,7 +158,7 @@ public class CanteenApp {
 				}
 				break; // End of Order
 
-			case 4: // Purchase Order
+			case 4: // Purchase Order Sajnam
 				CanteenApp.setHeader("PURCHASE ORDER");
 				System.out.println("1. View Purchase Order");
 				System.out.println("2. Add Purchase Order");
