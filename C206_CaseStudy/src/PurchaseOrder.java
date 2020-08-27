@@ -83,7 +83,7 @@ public class PurchaseOrder {
 	}
 
 	public String toString() {
-		return String.format("%-20s %-20d -$%20.2f -%s\n", getItemName(), getItemQuantity(), getItemUnitPrice(),
+		return String.format("%-20s %-20d $%-20.2f %s\n", getItemName(), getItemQuantity(), getItemUnitPrice(),
 				getDeliveryDate());
 
 	}

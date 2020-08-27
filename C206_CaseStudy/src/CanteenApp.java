@@ -11,18 +11,21 @@ public class CanteenApp {
 	// Start - By Vanessa:
 	private static ArrayList<Order> OrderList = new ArrayList<Order>();
 	// End
-	
+
 	// -----RyanStart-----\\
 	private static ArrayList<MenuItem> MenuList = new ArrayList<MenuItem>();
 	// -----RyanEnd-----\\
 
-	//Start - Akhil
+	// Start - Akhil
 	private static ArrayList<Account> accountList = new ArrayList<Account>();
 	// End
-	
+
+	// sajnam
+	private static ArrayList<PurchaseOrder> purchaseList = new ArrayList<PurchaseOrder>();
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+
 		// -----RyanStart-----\\
 		MenuList.add(new MenuItem("Indian", "Prata", 4.99));
 		MenuList.add(new MenuItem("Middle East", "Kebab", 6.99));
@@ -41,10 +44,10 @@ public class CanteenApp {
 		OrderList.add(new Order("Vanny", "Processing", true, xx));
 		OrderList.add(new Order("Bubbling", "Processing", true, xxx));
 		// End
-		
+
 		// Akhil
 		accountList.add(new Account("vanny", "pass"));
-		
+
 		// Start by NICOLE
 		ArrayList<Promotion> promotionList = new ArrayList<Promotion>();
 		// End
@@ -65,17 +68,15 @@ public class CanteenApp {
 				System.out.println("3. DELETE USER ACCOUNT");
 				int choice = Helper.readInt("Enter choice > ");
 
-				
 				if (choice == 1) {
 					CanteenApp.viewAccount(accountList);
 				} else if (choice == 2) {
 					addAccount(accountList);
 				} else if (choice == 3) {
-				CanteenApp.deleteAccount(accountList);
+					CanteenApp.deleteAccount(accountList);
 				} else {
 					System.out.println("Account does not exist.");
 				}
-
 
 				break;
 
@@ -138,7 +139,7 @@ public class CanteenApp {
 					}
 					System.out.println(output1);
 					int update = Helper.readInt("Enter choice > ");
-					
+
 					switch (update) {
 					case 1:
 						updateOrderStatus(OrderList);
@@ -150,7 +151,7 @@ public class CanteenApp {
 					break;
 				case 4:
 					deleteOrder(OrderList);
-					break;				
+					break;
 				default:
 					System.out.println("Invalid Input!");
 					break;
@@ -158,6 +159,35 @@ public class CanteenApp {
 				break; // End of Order
 
 			case 4: // Purchase Order
+				CanteenApp.setHeader("PURCHASE ORDER");
+				System.out.println("1. View Purchase Order");
+				System.out.println("2. Add Purchase Order");
+				System.out.println("3. Delete Purchase Order");
+				System.out.println("4. Update Delivery Date");
+				System.out.println("5. Search PO by item name");
+				System.out.println("6. Search PO by delivery date");
+				choice = Helper.readInt("Enter choice > ");
+
+				if (choice == 1) {
+					CanteenApp.viewPurchaseOrder(purchaseList);
+				} else if (choice == 2) {
+					String itemName = Helper.readString("Enter item name > ");
+					int itemQuantity = Helper.readInt("Enter item quanitity > ");
+					double itemUnitPrice = Helper.readDouble("Enter item unit price > ");
+					String deliveryDate = Helper.readString("Enter delivery date > ");
+					PurchaseOrder po = new PurchaseOrder(itemName, itemQuantity, itemUnitPrice, deliveryDate);
+					CanteenApp.addPurchaseOrder(purchaseList, po);
+				} else if (choice == 3) {
+					CanteenApp.deletePurchaseOrder(purchaseList);
+				} else if (choice == 4) {
+					CanteenApp.updatePOdeliveryDate(purchaseList);
+				} else if (choice == 5) {
+					CanteenApp.searchPOitem(purchaseList);
+				} else if (choice == 6) {
+					CanteenApp.searchPOdeliveryDate(purchaseList);
+				} else {
+					System.out.println("Invalid choice!");
+				}
 
 				break;
 
@@ -192,7 +222,10 @@ public class CanteenApp {
 		}
 	}
 
-/*=============================================================================================================================*/
+	/*
+	 * =============================================================================
+	 * ================================================
+	 */
 // Start -> By Vanessa:
 	public static void optionMenu() {
 		Helper.line(80, "-");
@@ -207,424 +240,6 @@ public class CanteenApp {
 	}
 
 // End
-/*=============================================================================================================================*/
-	// -----RyanStart-----\\
-
-
-	//Create MenuItem
-		public static void addMenuItem(ArrayList<MenuItem> menuItemList) {
-			String category = Helper.readString("Enter Category > ");
-			String name = Helper.readString("Enter Name > ");
-			double price = Helper.readDouble("Enter price > ");
-
-			if (price > 0) {
-				menuItemList.add(new MenuItem(category, name, price));
-				System.out.println("Menu Item added!");
-			} else {
-				System.out.println("Price must be greater than 0");
-			}
-		}
-
-		// Delete MenuItem
-		public static void deleteMenuItem(ArrayList<MenuItem> menuItemList) {
-			String deleteCategory = Helper.readString("Enter Menu Item Category to Remove > ");
-			String deleteName = Helper.readString("Enter Menu Item Name to Remove > ");
-			for (int i = 0; i < menuItemList.size(); i++) {
-				if (deleteCategory.equals(menuItemList.get(i).getCategory())
-						&& deleteName.equals(menuItemList.get(i).getName())) {
-					menuItemList.remove(i);
-					System.out.println("Menu Item Deleted!");
-				} else {
-					System.out.println("Delete failed!");
-				}
-			}
-		}
-
-		// Update MenuItem
-		public static void updateMenuItem(ArrayList<MenuItem> menuList) {
-
-			int option1 = 0;
-
-			System.out.println("1. Update Name");
-			System.out.println("2. Update Price");
-			option1 = Helper.readInt("Enter option > ");
-
-			if (option1 == 1) {
-				Helper.line(60, "-");
-				System.out.println("UPDATE NAME");
-				Helper.line(60, "-");
-
-				String updateName = Helper.readString("Enter Menu Item Name to update > ");
-				boolean isUpdated = false;
-
-				for (MenuItem m : menuList) {
-					if (m.getName().equals(updateName)) {
-						String newName = Helper.readString("Enter new name > ");
-						m.setName(newName);
-						isUpdated = true;
-						System.out.println("***Menu item name updated!");
-						break;
-					}
-				}
-
-				if (isUpdated == false) {
-					System.out.println("***Update Failed!");
-				}
-
-			} else if (option1 == 2) {
-				Helper.line(60, "-");
-				System.out.println("UPDATE PRICE");
-				Helper.line(60, "-");
-
-				String updateName = Helper.readString("Enter Menu Item Name to update > ");
-				boolean isUpdated = false;
-
-				for (MenuItem m : menuList) {
-					if (m.getName().equals(updateName)) {
-						double newPrice = Helper.readDouble("Enter new price > ");
-						if (newPrice > 0) {
-							m.setPrice(newPrice);
-							isUpdated = true;
-							System.out.println("***Menu item price updated!");
-						} else {
-							System.out.println("Price must be greater than 0");
-						}
-						break;
-					}
-				}
-
-				if (isUpdated == false) {
-					System.out.println("***Update failed!");
-				}
-			}
-		}
-
-		// View MenuItem
-		public static void viewAllMenuItem(ArrayList<MenuItem> menuList) {
-			int option = 0;
-
-			System.out.println("1. View All Menu Item");
-			System.out.println("2. View All Menu Items Grouped By Category");
-			option = Helper.readInt("Enter option > ");
-
-			if (option == 1) {
-				Helper.line(60, "-");
-				System.out.println("View All Menu Item");
-				Helper.line(60, "-");
-
-				String output = String.format("%-5s %-20s %-20s %-20s \n", "NO.", "CATEGORY", "NAME", "PRICE");
-				for (int i = 0; i < menuList.size(); i++) {
-					output += String.format("%-5s %-20s %-20s $%-20.2f \n", (i + 1), menuList.get(i).getCategory(),
-							menuList.get(i).getName(), menuList.get(i).getPrice());
-				}
-				System.out.print(output);
-
-			} else if (option == 2) {
-				Helper.line(60, "-");
-				System.out.println("View All Menu Items Grouped By Category");
-				Helper.line(60, "-");
-
-				if (!menuList.isEmpty()) {
-					String searchCategory = Helper.readString("Enter category >");
-					String output = String.format("%-5s %-20s %-20s %-20s \n", "NO.", "CATEGORY", "NAME", "PRICE");
-					String menuCategory = "";
-					boolean isFound = false;
-
-					for (int i = 0; i < menuList.size(); i++) {
-						menuCategory = menuList.get(i).getCategory();
-						menuCategory = menuList.get(i).getCategory().toLowerCase();
-						searchCategory = searchCategory.toLowerCase();
-
-						if (menuCategory.contains(searchCategory)) {
-							output += String.format("%-5s %-20s %-20s $%-20.2f \n", (i + 1),
-									menuList.get(i).getCategory(), menuList.get(i).getName(),
-									menuList.get(i).getPrice());
-
-							isFound = true;
-						}
-					}
-
-					if (isFound == false) {
-						System.out.println("Menu Item Category not found");
-					}
-					System.out.println(output);
-				}
-
-			}
-		}
-
-		// Search MenuItem
-		public static void searchMenuItem(ArrayList<MenuItem> menuList) {
-			if (!menuList.isEmpty()) {
-				String searchName = Helper.readString("Enter name >");
-				String output = String.format("%-20s %-20s %-20s \n", "CATEGORY", "NAME", "PRICE");
-				String menuName = "";
-				boolean isFound = false;
-
-				for (int i = 0; i < menuList.size(); i++) {
-					menuName = menuList.get(i).getName();
-
-					menuName = menuList.get(i).getCategory().toLowerCase();
-					menuName = menuList.get(i).getName().toLowerCase();
-					searchName = searchName.toLowerCase();
-
-					if (menuName.contains(searchName)) {
-						output += String.format("%-20s %-20s $%-20.2f \n", menuList.get(i).getCategory(),
-								menuList.get(i).getName(), menuList.get(i).getPrice());
-
-						isFound = true;
-					}
-				}
-	 
-				if (isFound == false) {
-					System.out.println("Menu Item name not found");
-				}
-				System.out.println(output);
-			}
-
-		}
-
-		// -----RyanEnd-----\\
-/*=============================================================================================================================*/
-// Header by NICOLE
-	public static void setHeader(String header) {
-		Helper.line(80, "-");
-		System.out.println(header);
-		Helper.line(80, "-");
-	}
-
-/*=============================================================================================================================*/
-// Start -> By Vanessa: (Works with menu (Menu Missing), Tested on my own mini sandbox)
-
-	public static void MyViewAllMenuItem(ArrayList<MenuItem> items) {
-		Helper.line(80, "-");
-		System.out.println("View Menu Items");
-		Helper.line(80, "-");
-		
-		String output = String.format("%-20s %-20s %s\n", "Category", "Name", "Price");
-		output += String.format("%-20s %-20s %s\n", "--------", "----", "-----");
-		for (MenuItem i : MenuList) {
-			output += i.toString();
-		}
-		System.out.println(output);
-	}
-	
-	public static void viewAllOrder(ArrayList<Order> items) {
-		Helper.line(100, "-");
-		System.out.println("View Orders");
-		Helper.line(100, "-");
-		
-		if (items.isEmpty()) {
-			System.out.println("*** No Orders Placed ***\n");
-		} else {
-			String output = String.format("%-15s %-13s %-10s %-13s %-25s %s\n", "Username", "Status", "Takeaway", "Pre-Order", "Collection Date & Time", "Food Item");
-			output += String.format("%-15s %-13s %-10s %-13s %-25s %s\n", "--------", "------", "--------", "---------", "----------------------", "---------");
-			
-			for (Order i : items) {
-				output += i.toString();
-			}
-			System.out.println(output);
-		}
-	}
-	
-	public static void addOrder(ArrayList<Order> items) {
-	
-		Helper.line(100, "-");
-		System.out.println("Add Order");
-		Helper.line(100, "-");
-		
-		ArrayList<MenuItem> items1 = new ArrayList<MenuItem>();
-		
-		String username = "";
-		while (username.isBlank()) {
-			username = Helper.readString("Enter your username > ");
-			if (username.isBlank()) {
-				System.out.println("Username cannot be empty!\n");
-			}
-		}
-		
-		String status = "Processing";
-		boolean takeaway = Helper.readBoolean("Takeaway? (True/False) > ");
-		boolean preOrder = Helper.readBoolean("Pre-order? (True/False) > ");
-		System.out.println("");
-		String patternDate = "(0[1-9]||[1-2][0-9]||30)-(0[1-9]||1[0-2])-202[0-1]";
-		String patternTime = "([0-1][0-9]||2[0-3]):([0-5][0-9])";
-		
-		String inputdate, inputtime, DateTime = "";
-		if (preOrder == true) {
-			LocalDateTime date = null;
-			LocalDateTime current = LocalDateTime.now();
-			while (date == null) {
-				inputdate = Helper.readString("Enter collection date (DD-MM-YYYY) > ");
-				inputtime = Helper.readStringRegEx("Enter collection time (HH:MM) >", patternTime); 	// add a method in the Helper.java
-				System.out.println("");
-				if (Pattern.matches(patternDate, inputdate)) {
-					DateTime = inputdate + " " + inputtime;
-					LocalDateTime input1 = LocalDateTime.parse(DateTime, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
-					if (input1.isAfter(current) || input1.isEqual(current)) {
-						if (ChronoUnit.DAYS.between(current, input1) >= 1) {
-							date = input1;
-						} else {
-							System.out.println("Date entered must be at least 1 days in advance.\n");
-						}
-					} else {
-						System.out.println("*** Time entered has passed. Enter a valid date and time ***\n");
-					}
-				} else {
-					System.out.println("Enter date in given format!\n");
-				}
-			}	
-		}
-	
-		String input = "";
-		double price = 0;
-		
-		MyViewAllMenuItem(MenuList);
-		while (!input.equalsIgnoreCase("N")) {
-			String item = Helper.readString("Enter food > ");
-			boolean avail = false;
-			
-			for (MenuItem i: MenuList) {
-				if (item.equalsIgnoreCase(i.getName())) {
-					items1.add(new MenuItem(i.getCategory(), i.getName(), i.getPrice()));
-					System.out.println("Food item added!");
-					price += i.getPrice();
-					System.out.println("$" + i.getPrice() + " added to the total payment.");
-					System.out.println("Total Cost of Order currently: $" + price + "\n");
-					avail = true;
-					break;
-				}
-			}
-			if (avail == false) {
-				System.out.println("Invalid food item!");
-			}
-			input = Helper.readString("Do you want to continue add food?(Y/N)> ");
-		}
-	
-		System.out.println("Order placed.");
-		System.out.println("Total Cost of Order: $" + price + "\n");
-		if (preOrder == true) {
-			items.add(new Order(username, status, takeaway, preOrder, DateTime, items1));
-		} else {
-			items.add(new Order(username, status, takeaway, items1));
-		}
-		
-		
-	}
-	
-	public static void deleteOrder(ArrayList<Order> items) {
-		viewAllOrder(items);
-		Helper.line(100, "-");
-		System.out.println("Delete Order");
-		Helper.line(100, "-");
-		
-		if (items.isEmpty()) {
-			System.out.println("*** There is no orders to delete ***\n");
-		} else {
-			boolean checker = false;
-			while (checker != true) {
-				String input = Helper.readString("Enter username to remove > ");
-				for(int i=0; i<items.size(); i++) {
-					if (input.equalsIgnoreCase(items.get(i).getUsername())) {
-						items.remove(i);
-						System.out.println("Order deleted");
-						checker = true;
-					}
-				}
-				if (checker == false) {
-					System.out.println("Username does not exist. \n");
-				}
-			}
-		}
-	}
-	
-	public static void updateOrderStatus(ArrayList<Order> items) {
-		Helper.line(100, "-");
-		System.out.println("Update Order");
-		Helper.line(100, "-");
-		
-		String updateStatus = "";
-		
-		if (items.isEmpty()) {
-			System.out.println("*** There is no orders to update ***\n");
-		} else {
-			boolean checker = false;
-			String output = "";
-			output = String.format("%-15s %-13s %-10s %-13s %-25s %s\n", "Username", "Status", "Takeaway", "Pre-Order", "Collection Date & Time", "Food Item");
-			output += String.format("%-15s %-13s %-10s %-13s %-25s %s\n", "--------", "------", "--------", "---------", "----------------------", "---------");
-			while (checker != true) {
-				String input = Helper.readString("Enter username > ");
-				for(int i=0; i<items.size(); i++) {
-					if (input.equalsIgnoreCase(items.get(i).getUsername())) {
-						output += items.get(i).toString();
-						checker = true;
-					}
-				}
-				if (checker == false) {
-					System.out.println("Username does not exist. \n");
-				} else if (checker == true) {
-					System.out.println(output);
-					System.out.println("");
-					int j = 0;
-					for(int i=0; i<items.size(); i++) {
-						if (input.equalsIgnoreCase(items.get(i).getUsername())) {
-							System.out.println("Order " + (j+1) +":");
-							updateStatus = Helper.readString("Enter order status to update > ");
-							items.get(i).setStatus(updateStatus);
-							System.out.println("Order Status Updated!\n");
-							j++;
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	public static void updateOrderTakeaway(ArrayList<Order> items) {
-		Helper.line(100, "-");
-		System.out.println("Update Order");
-		Helper.line(100, "-");
-		
-		boolean takeawayFlag;
-		
-		if (items.isEmpty()) {
-			System.out.println("*** There is no orders to update ***\n");
-		} else {
-			boolean checker = false;
-			String output = "";
-			output = String.format("%-15s %-13s %-10s %-13s %-25s %s\n", "Username", "Status", "Takeaway", "Pre-Order", "Collection Date & Time", "Food Item");
-			output += String.format("%-15s %-13s %-10s %-13s %-25s %s\n", "--------", "------", "--------", "---------", "----------------------", "---------");
-			while (checker != true) {
-				String input = Helper.readString("Enter username > ");
-				
-				for(int i=0; i<items.size(); i++) {
-					if (input.equalsIgnoreCase(items.get(i).getUsername())) {
-						output += items.get(i).toString();
-						checker = true;
-					}
-				}
-				if (checker == false) {
-					System.out.println("Username does not exist. \n");
-				} else if (checker == true) {
-					System.out.println(output);
-					System.out.println("");
-					int j = 0;
-					for(int i=0; i<items.size(); i++) {
-						if (input.equalsIgnoreCase(items.get(i).getUsername())) {
-							System.out.println("Order " + (j+1) +":");
-							takeawayFlag = Helper.readBoolean("Enter Takeaway Flag to update > ");
-							items.get(i).setTakeaway(takeawayFlag);
-							System.out.println("Order Takeaway Flag Updated!\n");
-							j++;
-						}
-					}
-				}
-			}
-		}
-	}
-
-// End
-/*=============================================================================================================================*/
 	// User Account CREATE, VIEW, DELETE -> By Akhil:
 
 	// Add Account
@@ -632,13 +247,13 @@ public class CanteenApp {
 		// TODO Auto-generated method stub
 		String uName = Helper.readString("Enter username> ");
 		String uPassword = Helper.readString("Enter password> ");
-		
+
 		Account uAcc = new Account(uName, uPassword);
 		accountList.add(uAcc);
 		System.out.println("Account added!");
 	}
 
-	//Retrieve Account
+	// Retrieve Account
 	public static String retrieveAllAccount(ArrayList<Account> accountList) {
 		// TODO Auto-generated method stub
 		String output = "";
@@ -657,7 +272,7 @@ public class CanteenApp {
 		if (accountList.isEmpty()) {
 			System.out.println("No user account added\n");
 		} else {
-			
+
 			String output = String.format("%-10s %-20s\n", "NAME", "PASSWORD");
 			output += retrieveAllAccount(accountList);
 			System.out.println(output);
@@ -667,9 +282,9 @@ public class CanteenApp {
 	// Delete Account
 	public static void deleteAccount(ArrayList<Account> accountList) {
 		// TODO Auto-generated method stub
-		
+
 		String user = Helper.readString("Enter user account> ");
-		
+
 		for (int i = 0; i < accountList.size(); i++) {
 
 			if (accountList.get(i).getUsername().equals(user)) {
@@ -679,7 +294,540 @@ public class CanteenApp {
 		}
 	}
 
-/*=============================================================================================================================*/
+	/*
+	 * =============================================================================
+	 * ================================================
+	 */
+	// -----RyanStart-----\\
+
+	// Create MenuItem
+	public static void addMenuItem(ArrayList<MenuItem> menuItemList) {
+		String category = Helper.readString("Enter Category > ");
+		String name = Helper.readString("Enter Name > ");
+		double price = Helper.readDouble("Enter price > ");
+
+		if (price > 0) {
+			menuItemList.add(new MenuItem(category, name, price));
+			System.out.println("Menu Item added!");
+		} else {
+			System.out.println("Price must be greater than 0");
+		}
+	}
+
+	// Delete MenuItem
+	public static void deleteMenuItem(ArrayList<MenuItem> menuItemList) {
+		String deleteCategory = Helper.readString("Enter Menu Item Category to Remove > ");
+		String deleteName = Helper.readString("Enter Menu Item Name to Remove > ");
+		for (int i = 0; i < menuItemList.size(); i++) {
+			if (deleteCategory.equals(menuItemList.get(i).getCategory())
+					&& deleteName.equals(menuItemList.get(i).getName())) {
+				menuItemList.remove(i);
+				System.out.println("Menu Item Deleted!");
+			} else {
+				System.out.println("Delete failed!");
+			}
+		}
+	}
+
+	// Update MenuItem
+	public static void updateMenuItem(ArrayList<MenuItem> menuList) {
+
+		int option1 = 0;
+
+		System.out.println("1. Update Name");
+		System.out.println("2. Update Price");
+		option1 = Helper.readInt("Enter option > ");
+
+		if (option1 == 1) {
+			Helper.line(60, "-");
+			System.out.println("UPDATE NAME");
+			Helper.line(60, "-");
+
+			String updateName = Helper.readString("Enter Menu Item Name to update > ");
+			boolean isUpdated = false;
+
+			for (MenuItem m : menuList) {
+				if (m.getName().equals(updateName)) {
+					String newName = Helper.readString("Enter new name > ");
+					m.setName(newName);
+					isUpdated = true;
+					System.out.println("***Menu item name updated!");
+					break;
+				}
+			}
+
+			if (isUpdated == false) {
+				System.out.println("***Update Failed!");
+			}
+
+		} else if (option1 == 2) {
+			Helper.line(60, "-");
+			System.out.println("UPDATE PRICE");
+			Helper.line(60, "-");
+
+			String updateName = Helper.readString("Enter Menu Item Name to update > ");
+			boolean isUpdated = false;
+
+			for (MenuItem m : menuList) {
+				if (m.getName().equals(updateName)) {
+					double newPrice = Helper.readDouble("Enter new price > ");
+					if (newPrice > 0) {
+						m.setPrice(newPrice);
+						isUpdated = true;
+						System.out.println("***Menu item price updated!");
+					} else {
+						System.out.println("Price must be greater than 0");
+					}
+					break;
+				}
+			}
+
+			if (isUpdated == false) {
+				System.out.println("***Update failed!");
+			}
+		}
+	}
+
+	// View MenuItem
+	public static void viewAllMenuItem(ArrayList<MenuItem> menuList) {
+		int option = 0;
+
+		System.out.println("1. View All Menu Item");
+		System.out.println("2. View All Menu Items Grouped By Category");
+		option = Helper.readInt("Enter option > ");
+
+		if (option == 1) {
+			Helper.line(60, "-");
+			System.out.println("View All Menu Item");
+			Helper.line(60, "-");
+
+			String output = String.format("%-5s %-20s %-20s %-20s \n", "NO.", "CATEGORY", "NAME", "PRICE");
+			for (int i = 0; i < menuList.size(); i++) {
+				output += String.format("%-5s %-20s %-20s $%-20.2f \n", (i + 1), menuList.get(i).getCategory(),
+						menuList.get(i).getName(), menuList.get(i).getPrice());
+			}
+			System.out.print(output);
+
+		} else if (option == 2) {
+			Helper.line(60, "-");
+			System.out.println("View All Menu Items Grouped By Category");
+			Helper.line(60, "-");
+
+			if (!menuList.isEmpty()) {
+				String searchCategory = Helper.readString("Enter category >");
+				String output = String.format("%-5s %-20s %-20s %-20s \n", "NO.", "CATEGORY", "NAME", "PRICE");
+				String menuCategory = "";
+				boolean isFound = false;
+
+				for (int i = 0; i < menuList.size(); i++) {
+					menuCategory = menuList.get(i).getCategory();
+					menuCategory = menuList.get(i).getCategory().toLowerCase();
+					searchCategory = searchCategory.toLowerCase();
+
+					if (menuCategory.contains(searchCategory)) {
+						output += String.format("%-5s %-20s %-20s $%-20.2f \n", (i + 1), menuList.get(i).getCategory(),
+								menuList.get(i).getName(), menuList.get(i).getPrice());
+
+						isFound = true;
+					}
+				}
+
+				if (isFound == false) {
+					System.out.println("Menu Item Category not found");
+				}
+				System.out.println(output);
+			}
+
+		}
+	}
+
+	// Search MenuItem
+	public static void searchMenuItem(ArrayList<MenuItem> menuList) {
+		if (!menuList.isEmpty()) {
+			String searchName = Helper.readString("Enter name >");
+			String output = String.format("%-20s %-20s %-20s \n", "CATEGORY", "NAME", "PRICE");
+			String menuName = "";
+			boolean isFound = false;
+
+			for (int i = 0; i < menuList.size(); i++) {
+				menuName = menuList.get(i).getName();
+
+				menuName = menuList.get(i).getCategory().toLowerCase();
+				menuName = menuList.get(i).getName().toLowerCase();
+				searchName = searchName.toLowerCase();
+
+				if (menuName.contains(searchName)) {
+					output += String.format("%-20s %-20s $%-20.2f \n", menuList.get(i).getCategory(),
+							menuList.get(i).getName(), menuList.get(i).getPrice());
+
+					isFound = true;
+				}
+			}
+
+			if (isFound == false) {
+				System.out.println("Menu Item name not found");
+			}
+			System.out.println(output);
+		}
+
+	}
+
+	// -----RyanEnd-----\\
+	/*
+	 * =============================================================================
+	 * ================================================
+	 */
+// Header by NICOLE
+	public static void setHeader(String header) {
+		Helper.line(80, "-");
+		System.out.println(header);
+		Helper.line(80, "-");
+	}
+
+	/*
+	 * =============================================================================
+	 * ================================================
+	 */
+// Start -> By Vanessa: (Works with menu (Menu Missing), Tested on my own mini sandbox)
+
+	public static void MyViewAllMenuItem(ArrayList<MenuItem> items) {
+		Helper.line(80, "-");
+		System.out.println("View Menu Items");
+		Helper.line(80, "-");
+
+		String output = String.format("%-20s %-20s %s\n", "Category", "Name", "Price");
+		output += String.format("%-20s %-20s %s\n", "--------", "----", "-----");
+		for (MenuItem i : MenuList) {
+			output += i.toString();
+		}
+		System.out.println(output);
+	}
+
+	public static void viewAllOrder(ArrayList<Order> items) {
+		Helper.line(100, "-");
+		System.out.println("View Orders");
+		Helper.line(100, "-");
+
+		if (items.isEmpty()) {
+			System.out.println("*** No Orders Placed ***\n");
+		} else {
+			String output = String.format("%-15s %-13s %-10s %-13s %-25s %s\n", "Username", "Status", "Takeaway",
+					"Pre-Order", "Collection Date & Time", "Food Item");
+			output += String.format("%-15s %-13s %-10s %-13s %-25s %s\n", "--------", "------", "--------", "---------",
+					"----------------------", "---------");
+
+			for (Order i : items) {
+				output += i.toString();
+			}
+			System.out.println(output);
+		}
+	}
+
+	public static void addOrder(ArrayList<Order> items) {
+
+		Helper.line(100, "-");
+		System.out.println("Add Order");
+		Helper.line(100, "-");
+
+		ArrayList<MenuItem> items1 = new ArrayList<MenuItem>();
+
+		String username = "";
+		while (username.isBlank()) {
+			username = Helper.readString("Enter your username > ");
+			if (username.isBlank()) {
+				System.out.println("Username cannot be empty!\n");
+			}
+		}
+
+		String status = "Processing";
+		boolean takeaway = Helper.readBoolean("Takeaway? (True/False) > ");
+		boolean preOrder = Helper.readBoolean("Pre-order? (True/False) > ");
+		System.out.println("");
+		String patternDate = "(0[1-9]||[1-2][0-9]||30)-(0[1-9]||1[0-2])-202[0-1]";
+		String patternTime = "([0-1][0-9]||2[0-3]):([0-5][0-9])";
+
+		String inputdate, inputtime, DateTime = "";
+		if (preOrder == true) {
+			LocalDateTime date = null;
+			LocalDateTime current = LocalDateTime.now();
+			while (date == null) {
+				inputdate = Helper.readString("Enter collection date (DD-MM-YYYY) > ");
+				inputtime = Helper.readStringRegEx("Enter collection time (HH:MM) >", patternTime); // add a method in
+																									// the Helper.java
+				System.out.println("");
+				if (Pattern.matches(patternDate, inputdate)) {
+					DateTime = inputdate + " " + inputtime;
+					LocalDateTime input1 = LocalDateTime.parse(DateTime,
+							DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+					if (input1.isAfter(current) || input1.isEqual(current)) {
+						if (ChronoUnit.DAYS.between(current, input1) >= 1) {
+							date = input1;
+						} else {
+							System.out.println("Date entered must be at least 1 days in advance.\n");
+						}
+					} else {
+						System.out.println("*** Time entered has passed. Enter a valid date and time ***\n");
+					}
+				} else {
+					System.out.println("Enter date in given format!\n");
+				}
+			}
+		}
+
+		String input = "";
+		double price = 0;
+
+		MyViewAllMenuItem(MenuList);
+		while (!input.equalsIgnoreCase("N")) {
+			String item = Helper.readString("Enter food > ");
+			boolean avail = false;
+
+			for (MenuItem i : MenuList) {
+				if (item.equalsIgnoreCase(i.getName())) {
+					items1.add(new MenuItem(i.getCategory(), i.getName(), i.getPrice()));
+					System.out.println("Food item added!");
+					price += i.getPrice();
+					System.out.println("$" + i.getPrice() + " added to the total payment.");
+					System.out.println("Total Cost of Order currently: $" + price + "\n");
+					avail = true;
+					break;
+				}
+			}
+			if (avail == false) {
+				System.out.println("Invalid food item!");
+			}
+			input = Helper.readString("Do you want to continue add food?(Y/N)> ");
+		}
+
+		System.out.println("Order placed.");
+		System.out.println("Total Cost of Order: $" + price + "\n");
+		if (preOrder == true) {
+			items.add(new Order(username, status, takeaway, preOrder, DateTime, items1));
+		} else {
+			items.add(new Order(username, status, takeaway, items1));
+		}
+
+	}
+
+	public static void deleteOrder(ArrayList<Order> items) {
+		viewAllOrder(items);
+		Helper.line(100, "-");
+		System.out.println("Delete Order");
+		Helper.line(100, "-");
+
+		if (items.isEmpty()) {
+			System.out.println("*** There is no orders to delete ***\n");
+		} else {
+			boolean checker = false;
+			while (checker != true) {
+				String input = Helper.readString("Enter username to remove > ");
+				for (int i = 0; i < items.size(); i++) {
+					if (input.equalsIgnoreCase(items.get(i).getUsername())) {
+						items.remove(i);
+						System.out.println("Order deleted");
+						checker = true;
+					}
+				}
+				if (checker == false) {
+					System.out.println("Username does not exist. \n");
+				}
+			}
+		}
+	}
+
+	public static void updateOrderStatus(ArrayList<Order> items) {
+		Helper.line(100, "-");
+		System.out.println("Update Order");
+		Helper.line(100, "-");
+
+		String updateStatus = "";
+
+		if (items.isEmpty()) {
+			System.out.println("*** There is no orders to update ***\n");
+		} else {
+			boolean checker = false;
+			String output = "";
+			output = String.format("%-15s %-13s %-10s %-13s %-25s %s\n", "Username", "Status", "Takeaway", "Pre-Order",
+					"Collection Date & Time", "Food Item");
+			output += String.format("%-15s %-13s %-10s %-13s %-25s %s\n", "--------", "------", "--------", "---------",
+					"----------------------", "---------");
+			while (checker != true) {
+				String input = Helper.readString("Enter username > ");
+				for (int i = 0; i < items.size(); i++) {
+					if (input.equalsIgnoreCase(items.get(i).getUsername())) {
+						output += items.get(i).toString();
+						checker = true;
+					}
+				}
+				if (checker == false) {
+					System.out.println("Username does not exist. \n");
+				} else if (checker == true) {
+					System.out.println(output);
+					System.out.println("");
+					int j = 0;
+					for (int i = 0; i < items.size(); i++) {
+						if (input.equalsIgnoreCase(items.get(i).getUsername())) {
+							System.out.println("Order " + (j + 1) + ":");
+							updateStatus = Helper.readString("Enter order status to update > ");
+							items.get(i).setStatus(updateStatus);
+							System.out.println("Order Status Updated!\n");
+							j++;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public static void updateOrderTakeaway(ArrayList<Order> items) {
+		Helper.line(100, "-");
+		System.out.println("Update Order");
+		Helper.line(100, "-");
+
+		boolean takeawayFlag;
+
+		if (items.isEmpty()) {
+			System.out.println("*** There is no orders to update ***\n");
+		} else {
+			boolean checker = false;
+			String output = "";
+			output = String.format("%-15s %-13s %-10s %-13s %-25s %s\n", "Username", "Status", "Takeaway", "Pre-Order",
+					"Collection Date & Time", "Food Item");
+			output += String.format("%-15s %-13s %-10s %-13s %-25s %s\n", "--------", "------", "--------", "---------",
+					"----------------------", "---------");
+			while (checker != true) {
+				String input = Helper.readString("Enter username > ");
+
+				for (int i = 0; i < items.size(); i++) {
+					if (input.equalsIgnoreCase(items.get(i).getUsername())) {
+						output += items.get(i).toString();
+						checker = true;
+					}
+				}
+				if (checker == false) {
+					System.out.println("Username does not exist. \n");
+				} else if (checker == true) {
+					System.out.println(output);
+					System.out.println("");
+					int j = 0;
+					for (int i = 0; i < items.size(); i++) {
+						if (input.equalsIgnoreCase(items.get(i).getUsername())) {
+							System.out.println("Order " + (j + 1) + ":");
+							takeawayFlag = Helper.readBoolean("Enter Takeaway Flag to update > ");
+							items.get(i).setTakeaway(takeawayFlag);
+							System.out.println("Order Takeaway Flag Updated!\n");
+							j++;
+						}
+					}
+				}
+			}
+		}
+	}
+
+// End
+	/*
+	 * =============================================================================
+	 * ================================================
+	 */
+	// sajnam Purchase order add, delete, view
+	public static void addPurchaseOrder(ArrayList<PurchaseOrder> purchaseList, PurchaseOrder po) {
+
+		CanteenApp.setHeader("ADD PURCHASE ORDER");
+		purchaseList.add(po);
+		System.out.println("Purchase Order added!");
+
+	}
+
+	public static void deletePurchaseOrder(ArrayList<PurchaseOrder> purchaseList) {
+
+		boolean isDeleted = false;
+		String deleteOrder = Helper.readString("Enter item name to delete> ");
+
+		for (int i = 0; i < purchaseList.size(); i++) {
+			if (deleteOrder.equalsIgnoreCase(purchaseList.get(i).getItemName())) {
+				purchaseList.remove(i);
+				isDeleted = true;
+				System.out.println("Purchase Order deleted!");
+			}
+		}
+		if (isDeleted == false) {
+			System.out.println("Purchase Order not deleted, as item was not found!");
+		}
+	}
+
+	public static void viewPurchaseOrder(ArrayList<PurchaseOrder> purchaseList) {
+
+		String output = String.format("%-20s %-20s %-20s %s\n", "ITEM NAME", "QUANTITY", "UNIT PRICE", "DELIVERY DATE");
+		for (PurchaseOrder i : purchaseList) {
+			output += i.toString();
+		}
+		System.out.println(output);
+
+	}
+
+	public static void updatePOdeliveryDate(ArrayList<PurchaseOrder> purchaseList) {
+
+		String itemName = Helper.readString("Enter item name > ");
+
+		boolean isUpdated = false;
+		for (int i = 0; i < purchaseList.size(); i++) {
+			if (itemName.equalsIgnoreCase(purchaseList.get(i).getItemName())) {
+				String deliveryDate = Helper.readString("Enter delivery date > ");
+				purchaseList.get(i).setDeliveryDate(deliveryDate);
+				isUpdated = true;
+				System.out.println(itemName + "'s delivery date is successfully updated!");
+			}
+
+		}
+		if (isUpdated == false) {
+			System.out.println(itemName + "'s delivery date failed to update!");
+		}
+	}
+
+	public static void searchPOitem(ArrayList<PurchaseOrder> purchaseList) {
+		String itemName = Helper.readString("Enter item name > ");
+
+		boolean isFound = false;
+		String output = String.format("%-20s %-20s %-20s %s\n", "ITEM NAME", "QUANTITY", "UNIT PRICE", "DELIVERY DATE");
+		for (int i = 0; i < purchaseList.size(); i++) {
+			if (itemName.equalsIgnoreCase(purchaseList.get(i).getItemName())) {
+				output += purchaseList.get(i).toString();
+				isFound = true;
+				System.out.println(output);
+
+			}
+
+		}
+		if (isFound == false) {
+			System.out.println(itemName + " is not found!");
+		}
+
+	}
+
+	public static void searchPOdeliveryDate(ArrayList<PurchaseOrder> purchaseList) {
+
+		String deliveryDate = Helper.readString("Enter delivery date > ");
+
+		boolean isFound = false;
+		String output = String.format("%-20s %-20s %-20s %s\n", "ITEM NAME", "QUANTITY", "UNIT PRICE", "DELIVERY DATE");
+		for (int i = 0; i < purchaseList.size(); i++) {
+			if (deliveryDate.equalsIgnoreCase(purchaseList.get(i).getDeliveryDate())) {
+				output += purchaseList.get(i).toString();
+				isFound = true;
+				System.out.println(output);
+
+			}
+
+		}
+		if (isFound == false) {
+			System.out.println(deliveryDate + " is not found!");
+		}
+	}
+
+	/*
+	 * =============================================================================
+	 * ================================================
+	 */
 //Promotion ADD, VIEW DELETE BY NICOLE
 	public static void addPromotion(ArrayList<Promotion> promotionList) {
 		String promoCode = Helper.readString("Enter Promotion Code: ");
@@ -687,13 +835,12 @@ public class CanteenApp {
 		ZoneId S = ZoneId.of("Singapore");
 		LocalDate date = LocalDate.now(S);
 		LocalDate ending = LocalDate.parse(endingDate);
-		if(promoCode.startsWith("Promo") && date.isBefore(ending)) {
+		if (promoCode.startsWith("Promo") && date.isBefore(ending)) {
 			double disAmount = Helper.readDouble("Enter Discount Amount: ");
 			Promotion promo = new Promotion(promoCode, endingDate, disAmount);
 			promotionList.add(promo);
 			System.out.println("Promotion added");
-		}
-		else {
+		} else {
 			System.out.println("input of promotion code or Date does not the requirement");
 		}
 	}
@@ -741,31 +888,33 @@ public class CanteenApp {
 		output += retrieveAllPromotion(promotionList);
 		System.out.println(output);
 	}
+
 	public static void updatePromotion(ArrayList<Promotion> promotionList) {
 		String oldPromoCode = Helper.readString("Enter Old Promotion Code To Update: ");
 		for (int i = 0; i < promotionList.size(); i++) {
-			if(promotionList.get(i).getPromotionCode().equals(oldPromoCode)) {
+			if (promotionList.get(i).getPromotionCode().equals(oldPromoCode)) {
 				String newPromoCode = Helper.readString("Enter New promotion Code: ");
 				String newEndingDate = Helper.readString("Enter New Promotion End Date: ");
 				ZoneId S = ZoneId.of("Singapore");
 				LocalDate date = LocalDate.now(S);
 				LocalDate ending = LocalDate.parse(newEndingDate);
-				if(newPromoCode.startsWith("Promo") && date.isBefore(ending)) {
+				if (newPromoCode.startsWith("Promo") && date.isBefore(ending)) {
 					double newDisAmount = Helper.readDouble("Enter New Discount Amount: ");
 					promotionList.get(i).setPromotionCode(newPromoCode);
 					promotionList.get(i).setEndFate(newEndingDate);
 					promotionList.get(i).setDiscountAmount(newDisAmount);
 					System.out.println("Promotion Updateded");
-				}
-				else {
+				} else {
 					System.out.println("input of promotion code or Date does not the requirement");
 				}
-			}
-			else {
+			} else {
 				System.out.println("Invalid promotion. Please try again");
 			}
 		}
 	}
-/*=============================================================================================================================*/
+	/*
+	 * =============================================================================
+	 * ================================================
+	 */
 
 }
