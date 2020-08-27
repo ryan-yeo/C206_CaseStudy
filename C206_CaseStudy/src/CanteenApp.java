@@ -204,45 +204,182 @@ public class CanteenApp {
 // End
 /*=============================================================================================================================*/
 	// -----RyanStart-----\\
-	private static void deleteMenuItem(ArrayList<MenuItem> menuList2) {
-		CanteenApp.viewAllMenuItem(MenuList);
-		String itemName = Helper.readString("Enter Username > ");
 
-		for (int i = 0; i < MenuList.size(); i++) {
-			if (itemName == MenuList.get(i).getName()) {
-				System.out.println(itemName + " has been deleted.");
+
+	//Create MenuItem
+		public static void addMenuItem(ArrayList<MenuItem> menuItemList) {
+			String category = Helper.readString("Enter Category > ");
+			String name = Helper.readString("Enter Name > ");
+			double price = Helper.readDouble("Enter price > ");
+
+			if (price > 0) {
+				menuItemList.add(new MenuItem(category, name, price));
+				System.out.println("Menu Item added!");
 			} else {
-				System.out.println("menu item does not exist.");
-				i = i + MenuList.size();
+				System.out.println("Price must be greater than 0");
 			}
 		}
 
-	}
+		// Delete MenuItem
+		public static void deleteMenuItem(ArrayList<MenuItem> menuItemList) {
+			String deleteCategory = Helper.readString("Enter Menu Item Category to Remove > ");
+			String deleteName = Helper.readString("Enter Menu Item Name to Remove > ");
+			for (int i = 0; i < menuItemList.size(); i++) {
+				if (deleteCategory.equals(menuItemList.get(i).getCategory())
+						&& deleteName.equals(menuItemList.get(i).getName())) {
+					menuItemList.remove(i);
+					System.out.println("Menu Item Deleted!");
+				} else {
+					System.out.println("Delete failed!");
+				}
+			}
+		}
 
-	private static void addMenuItem(ArrayList<MenuItem> menuList2) {
-		String category = Helper.readString("Enter Category:");
-		String itemName = Helper.readString("Enter User item Name: ");
-		double price = Helper.readDouble("Enter item price: ");
+		// Update MenuItem
+		public static void updateMenuItem(ArrayList<MenuItem> menuList) {
 
-		MenuItem a = new MenuItem(category, itemName, price);
-		MenuList.add(a);
-		System.out.println("New Item Added!");
-		return;
+			int option1 = 0;
 
-	}
+			System.out.println("1. Update Name");
+			System.out.println("2. Update Price");
+			option1 = Helper.readInt("Enter option > ");
 
-	private static String viewAllMenuItem(ArrayList<MenuItem> menuList2) {
-		String output = null;
-		for (int i = 0; i < MenuList.size(); i++) {
-			output = String.format("%-10s %-30s %-10.2f\n", MenuList.get(i).getCategory(), MenuList.get(i).getName(),
-					MenuList.get(i).getPrice());
+			if (option1 == 1) {
+				Helper.line(60, "-");
+				System.out.println("UPDATE NAME");
+				Helper.line(60, "-");
+
+				String updateName = Helper.readString("Enter Menu Item Name to update > ");
+				boolean isUpdated = false;
+
+				for (MenuItem m : menuList) {
+					if (m.getName().equals(updateName)) {
+						String newName = Helper.readString("Enter new name > ");
+						m.setName(newName);
+						isUpdated = true;
+						System.out.println("***Menu item name updated!");
+						break;
+					}
+				}
+
+				if (isUpdated == false) {
+					System.out.println("***Update Failed!");
+				}
+
+			} else if (option1 == 2) {
+				Helper.line(60, "-");
+				System.out.println("UPDATE PRICE");
+				Helper.line(60, "-");
+
+				String updateName = Helper.readString("Enter Menu Item Name to update > ");
+				boolean isUpdated = false;
+
+				for (MenuItem m : menuList) {
+					if (m.getName().equals(updateName)) {
+						double newPrice = Helper.readDouble("Enter new price > ");
+						if (newPrice > 0) {
+							m.setPrice(newPrice);
+							isUpdated = true;
+							System.out.println("***Menu item price updated!");
+						} else {
+							System.out.println("Price must be greater than 0");
+						}
+						break;
+					}
+				}
+
+				if (isUpdated == false) {
+					System.out.println("***Update failed!");
+				}
+			}
+		}
+
+		// View MenuItem
+		public static void viewAllMenuItem(ArrayList<MenuItem> menuList) {
+			int option = 0;
+
+			System.out.println("1. View All Menu Item");
+			System.out.println("2. View All Menu Items Grouped By Category");
+			option = Helper.readInt("Enter option > ");
+
+			if (option == 1) {
+				Helper.line(60, "-");
+				System.out.println("View All Menu Item");
+				Helper.line(60, "-");
+
+				String output = String.format("%-5s %-20s %-20s %-20s \n", "NO.", "CATEGORY", "NAME", "PRICE");
+				for (int i = 0; i < menuList.size(); i++) {
+					output += String.format("%-5s %-20s %-20s $%-20.2f \n", (i + 1), menuList.get(i).getCategory(),
+							menuList.get(i).getName(), menuList.get(i).getPrice());
+				}
+				System.out.print(output);
+
+			} else if (option == 2) {
+				Helper.line(60, "-");
+				System.out.println("View All Menu Items Grouped By Category");
+				Helper.line(60, "-");
+
+				if (!menuList.isEmpty()) {
+					String searchCategory = Helper.readString("Enter category >");
+					String output = String.format("%-5s %-20s %-20s %-20s \n", "NO.", "CATEGORY", "NAME", "PRICE");
+					String menuCategory = "";
+					boolean isFound = false;
+
+					for (int i = 0; i < menuList.size(); i++) {
+						menuCategory = menuList.get(i).getCategory();
+						menuCategory = menuList.get(i).getCategory().toLowerCase();
+						searchCategory = searchCategory.toLowerCase();
+
+						if (menuCategory.contains(searchCategory)) {
+							output += String.format("%-5s %-20s %-20s $%-20.2f \n", (i + 1),
+									menuList.get(i).getCategory(), menuList.get(i).getName(),
+									menuList.get(i).getPrice());
+
+							isFound = true;
+						}
+					}
+
+					if (isFound == false) {
+						System.out.println("Menu Item Category not found");
+					}
+					System.out.println(output);
+				}
+
+			}
+		}
+
+		// Search MenuItem
+		public static void searchMenuItem(ArrayList<MenuItem> menuList) {
+			if (!menuList.isEmpty()) {
+				String searchName = Helper.readString("Enter name >");
+				String output = String.format("%-20s %-20s %-20s \n", "CATEGORY", "NAME", "PRICE");
+				String menuName = "";
+				boolean isFound = false;
+
+				for (int i = 0; i < menuList.size(); i++) {
+					menuName = menuList.get(i).getName();
+
+					menuName = menuList.get(i).getCategory().toLowerCase();
+					menuName = menuList.get(i).getName().toLowerCase();
+					searchName = searchName.toLowerCase();
+
+					if (menuName.contains(searchName)) {
+						output += String.format("%-20s %-20s $%-20.2f \n", menuList.get(i).getCategory(),
+								menuList.get(i).getName(), menuList.get(i).getPrice());
+
+						isFound = true;
+					}
+				}
+	 
+				if (isFound == false) {
+					System.out.println("Menu Item name not found");
+				}
+				System.out.println(output);
+			}
 
 		}
-		return output;
 
-	}
-
-	// -----RyanEnd-----\\
+		// -----RyanEnd-----\\
 /*=============================================================================================================================*/
 // Header by NICOLE
 	public static void setHeader(String header) {
