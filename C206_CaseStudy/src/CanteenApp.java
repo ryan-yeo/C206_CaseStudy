@@ -238,6 +238,18 @@ public class CanteenApp {
 		}
 		System.out.println(output);
 	}
+	
+	public static void userTypeMenu() {
+		Helper.line(80, "-");
+		System.out.println("User Type Menu");
+		Helper.line(80, "-");
+		String output = "";
+		String list[] = { "Canteen Admin", "Stall Staff", "Customer"};
+		for (int i = 0; i < list.length; i++) {
+			output += String.format("%d. %s\n", (i + 1), list[i]);
+		}
+		System.out.println(output);
+	}
 
 // End
 	// User Account CREATE, VIEW, DELETE -> By Akhil:
