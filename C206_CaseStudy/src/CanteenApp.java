@@ -430,10 +430,10 @@ public class CanteenApp {
 		
 		ArrayList<MenuItem> items1 = new ArrayList<MenuItem>();
 		
-		String username = "";
-		while (username.isBlank()) {
+		String username = " ";
+		while (username.isEmpty()) {
 			username = Helper.readString("Enter your username > ");
-			if (username.isBlank()) {
+			if (username.isEmpty()) {
 				System.out.println("Username cannot be empty!\n");
 			}
 		}
