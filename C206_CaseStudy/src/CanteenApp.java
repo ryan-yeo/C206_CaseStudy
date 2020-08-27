@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 public class CanteenApp {
 
 	// Start - By Vanessa:
-	private static ArrayList<MenuItem> MyMenuList = new ArrayList<MenuItem>();
 	private static ArrayList<Order> OrderList = new ArrayList<Order>();
 	// End
 	
@@ -33,12 +32,6 @@ public class CanteenApp {
 		// -----RyanEnd-----\\
 
 		// Start - By Vanessa:
-		MyMenuList.add(new MenuItem("Western", "Chicken Chop", 5.90));
-		MyMenuList.add(new MenuItem("Western", "Chicken Cutlet", 6.90));
-		MyMenuList.add(new MenuItem("Western", "Fish n' Chips", 8.90));
-		MyMenuList.add(new MenuItem("Local", "Chicken Rice", 4.50));
-		MyMenuList.add(new MenuItem("Local", "Fried Rice", 5.0));
-		
 		int option = 0;
 		ArrayList<MenuItem> xx = new ArrayList<MenuItem>();
 		ArrayList<MenuItem> xxx = new ArrayList<MenuItem>();
