@@ -55,6 +55,13 @@ public class CanteenApp {
 
 			switch (option) {
 
+			case 1: // User Account
+
+				CanteenApp.setHeader("USER ACCOUNT MENU");
+				System.out.println("1. VIEW USER ACCOUNT");
+				System.out.println("2. CREATE USER ACCOUNT");
+				System.out.println("3. DELETE USER ACCOUNT");
+				int choice = Helper.readInt("Enter choice > ");
 
 			case 1: // User Account -> Akhil
 
@@ -79,7 +86,7 @@ public class CanteenApp {
 				}
 
 				break;
-
+			case 2: // Menu Item
 
 			case 2: // Menu Item -> Ryan
 
@@ -97,10 +104,10 @@ public class CanteenApp {
 
 				switch (menuC) {
 				case 1:
-					viewAllMenuItem(MenuList);
+					viewAllMenuItem1(MenuList);
 					break;
 				case 2:
-					addMenuItem(MenuList);
+					addMenuItem1(MenuList);
 					break;
 				case 3:
 					deleteMenuItem(MenuList);
@@ -269,7 +276,7 @@ public class CanteenApp {
 
 
 //Create MenuItem
-	public static void addMenuItem(ArrayList<MenuItem> menuItemList) {
+	public static void createMenuItem(ArrayList<MenuItem> menuItemList) {
 		String category = Helper.readString("Enter Category > ");
 		String name = Helper.readString("Enter Name > ");
 		double price = Helper.readDouble("Enter price > ");
@@ -298,7 +305,7 @@ public class CanteenApp {
 	}
 
 	// Update MenuItem
-	public static void updateMenuItem(ArrayList<MenuItem> menuList) {
+	public static void updateMenuItem(ArrayList<MenuItem> menuItemList) {
 
 		int option1 = 0;
 
@@ -314,7 +321,7 @@ public class CanteenApp {
 			String updateName = Helper.readString("Enter Menu Item Name to update > ");
 			boolean isUpdated = false;
 
-			for (MenuItem m : menuList) {
+			for (MenuItem m : menuItemList) {
 				if (m.getName().equals(updateName)) {
 					String newName = Helper.readString("Enter new name > ");
 					m.setName(newName);
@@ -336,7 +343,7 @@ public class CanteenApp {
 			String updateName = Helper.readString("Enter Menu Item Name to update > ");
 			boolean isUpdated = false;
 
-			for (MenuItem m : menuList) {
+			for (MenuItem m : menuItemList) {
 				if (m.getName().equals(updateName)) {
 					double newPrice = Helper.readDouble("Enter new price > ");
 					if (newPrice > 0) {
@@ -357,7 +364,7 @@ public class CanteenApp {
 	}
 
 	// View MenuItem
-	public static void viewAllMenuItem(ArrayList<MenuItem> menuList) {
+	public static void viewAllMenuItem(ArrayList<MenuItem> menuItemList) {
 		int option = 0;
 
 		System.out.println("1. View All Menu Item");
@@ -370,9 +377,9 @@ public class CanteenApp {
 			Helper.line(60, "-");
 
 			String output = String.format("%-5s %-20s %-20s %-20s \n", "NO.", "CATEGORY", "NAME", "PRICE");
-			for (int i = 0; i < menuList.size(); i++) {
-				output += String.format("%-5s %-20s %-20s $%-20.2f \n", (i + 1), menuList.get(i).getCategory(),
-						menuList.get(i).getName(), menuList.get(i).getPrice());
+			for (int i = 0; i < menuItemList.size(); i++) {
+				output += String.format("%-5s %-20s %-20s $%-20.2f \n", (i + 1), menuItemList.get(i).getCategory(),
+						menuItemList.get(i).getName(), menuItemList.get(i).getPrice());
 			}
 			System.out.print(output);
 
@@ -381,21 +388,21 @@ public class CanteenApp {
 			System.out.println("View All Menu Items Grouped By Category");
 			Helper.line(60, "-");
 
-			if (!menuList.isEmpty()) {
+			if (!menuItemList.isEmpty()) {
 				String searchCategory = Helper.readString("Enter category >");
 				String output = String.format("%-5s %-20s %-20s %-20s \n", "NO.", "CATEGORY", "NAME", "PRICE");
 				String menuCategory = "";
 				boolean isFound = false;
 
-				for (int i = 0; i < menuList.size(); i++) {
-					menuCategory = menuList.get(i).getCategory();
-					menuCategory = menuList.get(i).getCategory().toLowerCase();
+				for (int i = 0; i < menuItemList.size(); i++) {
+					menuCategory = menuItemList.get(i).getCategory();
+					menuCategory = menuItemList.get(i).getCategory().toLowerCase();
 					searchCategory = searchCategory.toLowerCase();
 
 					if (menuCategory.contains(searchCategory)) {
 						output += String.format("%-5s %-20s %-20s $%-20.2f \n", (i + 1),
-								menuList.get(i).getCategory(), menuList.get(i).getName(),
-								menuList.get(i).getPrice());
+								menuItemList.get(i).getCategory(), menuItemList.get(i).getName(),
+								menuItemList.get(i).getPrice());
 
 						isFound = true;
 					}
@@ -411,23 +418,23 @@ public class CanteenApp {
 	}
 
 	// Search MenuItem
-	public static void searchMenuItem(ArrayList<MenuItem> menuList) {
-		if (!menuList.isEmpty()) {
+	public static void searchMenuItem(ArrayList<MenuItem> menuItemList) {
+		if (!menuItemList.isEmpty()) {
 			String searchName = Helper.readString("Enter name >");
 			String output = String.format("%-20s %-20s %-20s \n", "CATEGORY", "NAME", "PRICE");
 			String menuName = "";
 			boolean isFound = false;
 
-			for (int i = 0; i < menuList.size(); i++) {
-				menuName = menuList.get(i).getName();
+			for (int i = 0; i < menuItemList.size(); i++) {
+				menuName = menuItemList.get(i).getName();
 
-				menuName = menuList.get(i).getCategory().toLowerCase();
-				menuName = menuList.get(i).getName().toLowerCase();
+				menuName = menuItemList.get(i).getCategory().toLowerCase();
+				menuName = menuItemList.get(i).getName().toLowerCase();
 				searchName = searchName.toLowerCase();
 
 				if (menuName.contains(searchName)) {
-					output += String.format("%-20s %-20s $%-20.2f \n", menuList.get(i).getCategory(),
-							menuList.get(i).getName(), menuList.get(i).getPrice());
+					output += String.format("%-20s %-20s $%-20.2f \n", menuItemList.get(i).getCategory(),
+							menuItemList.get(i).getName(), menuItemList.get(i).getPrice());
 
 					isFound = true;
 				}
