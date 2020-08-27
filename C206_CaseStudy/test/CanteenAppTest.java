@@ -1,6 +1,7 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -14,11 +15,13 @@ import org.junit.Test;
 
 public class CanteenAppTest {
 private ArrayList<Promotion> promotionList;
+private ArrayList<Account> accountList;
 	
 	@Before
 	public void setUp() throws Exception {
 		// prepare test data
 		promotionList = new ArrayList<Promotion>();
+		accountList = new ArrayList<Account>();
 	}
 	
 	
@@ -127,7 +130,7 @@ private ArrayList<Promotion> promotionList;
 	
 //---------------------------------------------------------------------------
 	
-// NICOLE Promotion TEST
+	// NICOLE Promotion TEST
 	@Test
 	public void addPromotionTest() {
 		// Promotion list is not null, so that can add a new promotion - boundary
@@ -219,10 +222,58 @@ private ArrayList<Promotion> promotionList;
 		assertFalse(false);
 	
 	}
-// NICOLE Promotion Test END
+	// NICOLE Promotion Test END
 	
+	//Akhil User Account test 
+	@Test
+	public void addAccounttest() {
+
+		Account j1 = new Account("NAME", "PASSWORD");
+		
+		// Check if the list is not null but empty boundary
+		assertEquals("Check if arraylist size is 0" , 0, accountList.size());
+		
+		// Having added an item to an empty list, test if the list size is 1
+		accountList.add(j1);
+		// Add an item and test if ArrayList has a size of 1
+		assertEquals("Check if arraylist size is 1" , 1, accountList.size());
+	}
+
+	@Test
+	public void retrieveAccounttest() {
+		Account j1 = new Account("NAME", "PASSWORD");
+		accountList.add(j1);
+		// Remove customer according to the list. Check if planned output String is the same as retrieved package list
+		String output = String.format("%-10s %-10s\n", "NAME", "PASSWORD");;
+		// Check if output string is similar to the received list
+		assertEquals("checks if its retrieved properly", output, accountList.get(0).toString());
+
+	}
+
+	@Test
+	public void viewAccounttest() {
+		// Given an empty list, check if the list size is 1 after adding 1 account
+		addAccounttest();
+
+		String output = CanteenApp.retrieveAllAccount(accountList);
+		// Test if the predicted output String is the same as the retrieved list
+		assertEquals("Checks if view all is working properly.", output, CanteenApp.retrieveAllAccount(accountList));
+	}
+
+	@Test
+	public void deleteAccount() {
+		Account j1 = new Account("NAME", "PASSWORD");
+		accountList.add(j1);
+		assertNotNull("Test if there is valid Request Quotation arraylist to retrieve item", accountList);
+		// Check if the list size is 1 given an empty list after deleting 1 account
+		accountList.remove(0);
+		assertEquals("Checks if deleted properly,", 0, accountList.size());
+	}
+
+
 	@After
 	public void tearDown() throws Exception {
 		promotionList = null;
+		accountList = null;
 	}
 }

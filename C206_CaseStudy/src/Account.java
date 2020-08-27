@@ -12,6 +12,9 @@ public class Account {
 
 	public Account(String userAccount, String accountPassword) {
 		// TODO Auto-generated constructor stub
+		this.username = userAccount;
+		this.password = accountPassword;
+		
 	}
 
 	public String getUsername() {
@@ -40,7 +43,7 @@ public class Account {
 
 	public String toString() {
 		String acc = "";
-		acc = String.format("%-10s %-10s %-10s\n", username, password, userRole);
+		acc = String.format("%-10s %-10s\n", username, password);
 		return acc;
 	}
 

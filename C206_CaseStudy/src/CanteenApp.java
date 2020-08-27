@@ -12,10 +12,15 @@ public class CanteenApp {
 	private static ArrayList<MenuItem> MyMenuList = new ArrayList<MenuItem>();
 	private static ArrayList<Order> OrderList = new ArrayList<Order>();
 	// End
+	
 	// -----RyanStart-----\\
 	private static ArrayList<MenuItem> MenuList = new ArrayList<MenuItem>();
 	// -----RyanEnd-----\\
 
+	//Start - Akhil
+	private static ArrayList<Account> accountList = new ArrayList<Account>();
+	// End
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
@@ -43,7 +48,10 @@ public class CanteenApp {
 		OrderList.add(new Order("Vanny", "Processing", true, xx));
 		OrderList.add(new Order("Bubbling", "Processing", true, xxx));
 		// End
-
+		
+		// Akhil
+		accountList.add(new Account("vanny", "pass"));
+		
 		// Start by NICOLE
 		ArrayList<Promotion> promotionList = new ArrayList<Promotion>();
 		// End
@@ -55,26 +63,26 @@ public class CanteenApp {
 			System.out.println("");
 
 			switch (option) {
-			case 1: // User Account
+
+			case 1: // User Account -> Akhil
 
 				CanteenApp.setHeader("USER ACCOUNT MENU");
 				System.out.println("1. VIEW USER ACCOUNT");
 				System.out.println("2. CREATE USER ACCOUNT");
 				System.out.println("3. DELETE USER ACCOUNT");
 				int choice = Helper.readInt("Enter choice > ");
-				ArrayList<Account> accountList;
+
+				
 				if (choice == 1) {
-//						CanteenApp.viewAllAccounts(accountList);
+					CanteenApp.viewAccount(accountList);
 				} else if (choice == 2) {
-//						Account acc = new Account(userAccount, accountPassword);
-//						accountList.add(acc);
-					System.out.println("New Account Added!");
-					return;
+					addAccount(accountList);
 				} else if (choice == 3) {
-//						CanteenApp.deleteAccount(accountList);
+				CanteenApp.deleteAccount(accountList);
 				} else {
 					System.out.println("Account does not exist.");
 				}
+
 
 				break;
 
@@ -427,7 +435,7 @@ public class CanteenApp {
 	}
 	
 	public static void addOrder(ArrayList<Order> items) {
-
+	
 		Helper.line(100, "-");
 		System.out.println("Add Order");
 		Helper.line(100, "-");
@@ -474,7 +482,7 @@ public class CanteenApp {
 				}
 			}	
 		}
-
+	
 		String input = "";
 		double price = 0;
 		
@@ -499,7 +507,7 @@ public class CanteenApp {
 			}
 			input = Helper.readString("Do you want to continue add food?(Y/N)> ");
 		}
-
+	
 		System.out.println("Order placed.");
 		System.out.println("Total Cost of Order: $" + price + "\n");
 		if (preOrder == true) {
@@ -621,57 +629,59 @@ public class CanteenApp {
 			}
 		}
 	}
-	
+
 // End
 /*=============================================================================================================================*/
-// User Account CREATE, VIEW, DELETE -> By Akhil:
+	// User Account CREATE, VIEW, DELETE -> By Akhil:
 
-	// Adding Account
+	// Add Account
 	public static void addAccount(ArrayList<Account> accountList) {
-
-		String userAccount = Helper.readString("Enter User Account Name: ");
-		String accountPassword = Helper.readString("Enter Account Password: ");
-
-		Account acc = new Account(userAccount, accountPassword);
-		accountList.add(acc);
-		System.out.println("New Account Added!");
-		return;
-
+		// TODO Auto-generated method stub
+		String uName = Helper.readString("Enter username> ");
+		String uPassword = Helper.readString("Enter password> ");
+		
+		Account uAcc = new Account(uName, uPassword);
+		accountList.add(uAcc);
+		System.out.println("Account added!");
 	}
 
-	// Retrieving account list.
-	public static String retrieveAllAccounts(ArrayList<Account> accountList) {
+	//Retrieve Account
+	public static String retrieveAllAccount(ArrayList<Account> accountList) {
+		// TODO Auto-generated method stub
 		String output = "";
+
 		for (int i = 0; i < accountList.size(); i++) {
 
-			output += String.format("%-10s %-30s %-10.2f\n", accountList.get(i).getUsername(),
-					accountList.get(i).getPassword(), accountList.get(i).getUserRole());
-
+			output += String.format("%-10s %-20s\n", accountList.get(i).getUsername(),
+					accountList.get(i).getPassword());
 		}
 		return output;
 	}
 
-	// Viewing Account List
-	public static void viewAllAccounts(ArrayList<Account> accountList) {
-		for (int i = 0; i < accountList.size(); i++) {
-			CanteenApp.setHeader("ACCOUNT LIST");
-			String output = String.format("%-10s %-30s %-10s\n", "USERNAME", "PASSWORD", "USER ROLE");
-			output += retrieveAllAccounts(accountList);
+	// View Account
+	public static void viewAccount(ArrayList<Account> accountList) {
+
+		if (accountList.isEmpty()) {
+			System.out.println("No user account added\n");
+		} else {
+			
+			String output = String.format("%-10s %-20s\n", "NAME", "PASSWORD");
+			output += retrieveAllAccount(accountList);
 			System.out.println(output);
 		}
-
 	}
 
+	// Delete Account
 	public static void deleteAccount(ArrayList<Account> accountList) {
-
-		CanteenApp.viewAllAccounts(accountList);
-		String username = Helper.readString("Enter Username > ");
-
+		// TODO Auto-generated method stub
+		
+		String user = Helper.readString("Enter user account> ");
+		
 		for (int i = 0; i < accountList.size(); i++) {
-			if (username == accountList.get(i).getUsername()) {
-				System.out.println("Staff " + username + "'s account has been deleted.");
-			} else {
-				System.out.println("Account does not exist.");
+
+			if (accountList.get(i).getUsername().equals(user)) {
+				accountList.remove(i);
+				System.out.println("Account removed!");
 			}
 		}
 	}
