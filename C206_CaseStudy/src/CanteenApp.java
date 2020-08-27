@@ -186,45 +186,7 @@ public class CanteenApp {
 				}
 				break; // End of Order
 
-			case 4: // Purchase Order -> Rai
-				CanteenApp.setHeader("PURCHASE ORDER");
-				System.out.println("1. View Purchase Order");
-				System.out.println("2. Add Purchase Order");
-				System.out.println("3. Delete Purchase Order");
-				choice = Helper.readInt("Enter choice > ");
-
-				if (choice == 1) {
-					CanteenApp.viewPurchaseOrder(purchaseList);
-				} else if (choice == 2) {
-					CanteenApp.addPurchaseOrder(purchaseList);
-				} else if (choice == 3) {
-					CanteenApp.deletePurchaseOrder(purchaseList);
-				} else {
-					System.out.println("Invalid Choice Input.");
-				}
-
-				break;
-
-			case 5: // Promotion -> NICOLE
-				CanteenApp.setHeader("PROMOTION");
-				System.out.println("1. View Promotion");
-				System.out.println("2. Add Promotion");
-				System.out.println("3. Delete Promotion");
-				System.out.println("4. Update Promotion");
-				choice = Helper.readInt("Enter choice > ");
-
-				if (choice == 1) {
-					CanteenApp.viewAllPromotion(promotionList);
-				} else if (choice == 2) {
-					CanteenApp.addPromotion(promotionList);
-				} else if (choice == 3) {
-					CanteenApp.deletePromotion(promotionList);
-				} else if (choice == 4) {
-					CanteenApp.updatePromotion(promotionList);
-				} else {
-					System.out.println("Invalid Choice Input.");
-				}
-				break;
+			
 
 			case 6:
 				System.out.println("Bye!");
@@ -538,7 +500,7 @@ public class CanteenApp {
 	 * ================================================
 	 */
 	// User Account CREATE, VIEW, DELETE -> By Akhil:
-	=======
+
 
 // -----RyanEnd-----\\
 	/*
@@ -546,15 +508,7 @@ public class CanteenApp {
 	 * ================================================
 	 */
 // User Account CREATE, VIEW, DELETE -> By Akhil:
-	>>>>>>>branch'master'
 
-	of https:// github.com/sawsage1/C206_CaseStudy
-
-	// Adding Account
-	<<<<<<<HEAD
-
-	=======>>>>>>>branch'master'
-	of https:// github.com/sawsage1/C206_CaseStudy
 
 	public static void addAccount(ArrayList<Account> accountList) {
 
@@ -603,13 +557,13 @@ public class CanteenApp {
 				System.out.println("Account does not exist.");
 			}
 		}
-	}<<<<<<<HEAD
+	}
 
 	/*
 	 * =============================================================================
 	 * ================================================
 	 */
-	=======
+
 
 	/*
 	 * =============================================================================
@@ -752,9 +706,7 @@ public class CanteenApp {
 	 * =============================================================================
 	 * ================================================
 	 */
-	>>>>>>>branch'master'
 
-	of https:// github.com/sawsage1/C206_CaseStudy
 //Promotion ADD, VIEW DELETE BY NICOLE
 
 	public static void addPromotion(ArrayList<Promotion> promotionList) {
@@ -773,16 +725,13 @@ public class CanteenApp {
 		}
 	}
 
-	<<<<<<<HEAD
 
 	public static void addPromotion(ArrayList<Promotion> promotionList, Promotion promo) {
 		promotionList.add(promo);
 		System.out.println("Promotion added");
 	}
 
-	=======>>>>>>>branch'master'
 
-	of https:// github.com/sawsage1/C206_CaseStudy
 
 	public static Boolean doDeletePromotion(ArrayList<Promotion> promotionList, String promotionCode, String endDate) {
 
@@ -826,13 +775,13 @@ public class CanteenApp {
 		String output = String.format("%-20s %-20s %-20s\n", "PROMOTION CODE", "END DATE", "DISCOUNT AMOUNT");
 		output += retrieveAllPromotion(promotionList);
 		System.out.println(output);
-	}<<<<<<<HEAD
+	}
 	/*
 	 * =============================================================================
 	 * ================================================
 	 */
 
-	=======
+
 
 	public static void updatePromotion(ArrayList<Promotion> promotionList) {
 		String oldPromoCode = Helper.readString("Enter Old Promotion Code To Update: ");
@@ -863,7 +812,5 @@ public class CanteenApp {
 	 * =============================================================================
 	 * ================================================
 	 */
-	>>>>>>>branch'master'
 
-	of https:// github.com/sawsage1/C206_CaseStudy
 }
