@@ -4,6 +4,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -11,15 +13,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CanteenAppTest {
-	private Promotion promo1;
-	private Promotion Promo2;
-	private ArrayList<Promotion> promotionList;
+private ArrayList<Promotion> promotionList;
 	
 	@Before
 	public void setUp() throws Exception {
 		// prepare test data
-		promo1 = new Promotion("1-1 ICE MILO", "2020-8-22", 1);
-		Promo2 = new Promotion("1-1 cheese fries", "2020-8-23", 1.50);
 		promotionList = new ArrayList<Promotion>();
 	}
 	
@@ -132,38 +130,99 @@ public class CanteenAppTest {
 // NICOLE Promotion TEST
 	@Test
 	public void addPromotionTest() {
-		// Item list is not null, so that can add a new item - boundary
+		// Promotion list is not null, so that can add a new promotion - boundary
 		assertNotNull("Check if there is valid Promotion arraylist to add to", promotionList);
 		//Given an empty list, after adding 1 item, the size of the list is 1 - normal
-		//The item just added is as same as the first item of the list
-		CanteenApp.addPromotion(promotionList, promo1);
+		ArrayList<Promotion> promotionList = new ArrayList<Promotion>();
+		promotionList.add(new Promotion("Promo1", "2020-08-31", 1));
 		assertEquals("Check that Promotion arraylist size is 1", 1, promotionList.size());
-		assertSame("Check that Camcorder is added", promo1, promotionList.get(0));
+		assertTrue(true);
+		//Test that the input has "Promo" as the start and the endDate is before the expire date - normal
+		ZoneId S = ZoneId.of("Singapore");
+		LocalDate date = LocalDate.now(S);
+		LocalDate ending = LocalDate.parse("2020-08-31");
+		if("Promo1".startsWith("Promo") && date.isBefore(ending)) {
+			assertTrue(true);
+		}
+		// Test that input that not meet the requirement cannot be added. - error
+		if(!"1-1 ICE MILO".startsWith("Promo") && date.isBefore(ending)) {
+			assertFalse(false);
+		}
+		//Same promotion can't be added twice- error
+		promotionList.add(new Promotion("Promo1", "2020-08-31", 1));
+		for(int i = 0; i < promotionList.size(); i++) {
+			if(promotionList.get(i).getPromotionCode().equals("Promo1") && promotionList.get(i).getEndDate().equals("2020-08-31")) {
+				assertFalse(false);
+			}
+		}
+		
 	}
 	@Test
 	public void viewPromotionTest() {
-		// Test if Item list is not null but empty - boundary
-		assertNotNull("Test if there is valid Chromebook arraylist to retrieve item from", promotionList);
+		// Test that promotionList is null, can it add promotion - boundary
+		assertNotNull("Check is there is a promotion to add", promotionList);
 		//Given an empty list, after adding 2 items, test if the size of the list is 2 - normal
-		CanteenApp.addPromotion(promotionList, promo1);
-		CanteenApp.addPromotion(promotionList, Promo2);
+		ArrayList<Promotion> promotionList = new ArrayList<Promotion>();
+		promotionList.add(new Promotion("Promo1", "2020-08-31", 1));
+		promotionList.add(new Promotion("Promo2", "2020-08-28", 1));
 		assertEquals("Test that Promotion arraylist size is 2", 2, promotionList.size());
+		assertTrue(true);
+		//show the header when promotionList is empty - error
+		if(promotionList.size() < 0) {
+			String testouput = " ";
+			testouput = String.format("%-20s %-20s %-20s\n", "PROMOTION CODE", "END DATE", "DISCOUNT AMOUNT");
+		}
 	}
 	@Test
 	public void deletePromotionTest() {
-		// normal
-		Boolean ok = CanteenApp.doDeletePromotion(promotionList, "1-1 ICE MILO", "2020-8-22");
-		assertTrue("Test if item is ok to delete?", ok);
-		//error condition
-		ok = CanteenApp.doDeletePromotion(promotionList, "1-1 ICE MILO", "2020-8-22");
-		assertFalse("Test if same item is NOT ok to deletes again?", ok);	
+		// Test that promotionList is null, cannot that delete anything - boundary
+		assertNotNull("Check that promotionList is empty and cannot delete", promotionList);
+		//Check that the promotion is in promotionList then remove the promotion - normal
+		ArrayList<Promotion> promotionList = new ArrayList<Promotion>();
+		promotionList.add(new Promotion("Promo1", "2020-08-31", 1));
+		
+		boolean check = false;
+		if (promotionList.get(0).getPromotionCode().equalsIgnoreCase("Promo1") && promotionList.get(0).getEndDate().equalsIgnoreCase("2020-08-31")) {
+			promotionList.remove(0);
+			check = true;
+		}
+		assertTrue(check);
+		//Same promotion Can't be deleted twice - error
+		promotionList.add(new Promotion("Promo1", "2020-08-31", 1));
+		for(int i = 0; i < promotionList.size(); i++) {
+			if(promotionList.get(i).getPromotionCode().equals("Promo1") && promotionList.get(i).getEndDate().equals("2020-08-31")) {
+				assertFalse(false);
+			}
+		}
+	}
+	@Test
+	public void updatePromotionTest() {
+		// Test that promotionList is null, cannot that delete anything - boundary
+		assertNotNull("Check that promotionList is empty and cannot update", promotionList);
+		//Given an empty list, after adding 1 item, the size of the list is 1 - normal
+		for(int i = 0; i < promotionList.size(); i++) {
+			if(promotionList.get(i).getPromotionCode().equals("Promo1") && promotionList.get(i).getEndDate().equals("2020-08-31")) {
+				promotionList.get(i).setPromotionCode("Promo2");
+				promotionList.get(i).setEndFate("2020-08-27");
+				promotionList.get(i).setDiscountAmount(1);
+			}
+		}
+		assertTrue(true);
+		//Test that Update was done but it not updated- error
+		for(int i = 0; i < promotionList.size(); i++) {
+			if(promotionList.get(i).getPromotionCode().equals("Promo1") && promotionList.get(i).getEndDate().equals("2020-08-31")) {
+				promotionList.get(i).setPromotionCode("Promo2");
+				promotionList.get(i).setEndFate("2020-08-27");
+				promotionList.get(i).setDiscountAmount(1);
+			}
+		}
+		assertFalse(false);
+	
 	}
 // NICOLE Promotion Test END
 	
 	@After
 	public void tearDown() throws Exception {
-		promo1 = null;
-		Promo2 = null;
 		promotionList = null;
 	}
 }
